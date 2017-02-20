@@ -16,6 +16,7 @@ function kitchenPageLoaded() { // functions specific to the index.html document
 // ***************************
 function displayItems() {
     displayButton('knapp', "Send order from bar");
+    
 }
 
 // **********

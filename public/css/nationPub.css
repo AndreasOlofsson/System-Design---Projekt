@@ -30,7 +30,7 @@ button{
 }
 .test{
 	table-layout: fixed;
-	height: 450px;
+	height: 550px;
 	overflow-y: scroll;
 	float: left;
 
@@ -38,7 +38,7 @@ button{
 .bord{
 	border: 2px solid black;
 	table-layout: fixed;
-	height: 450px;
+	height: 550px;
 	width: 250px;
 	float: left;
 }
