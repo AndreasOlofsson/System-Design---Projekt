@@ -1,5 +1,60 @@
+var obj = new Vue({
+  el: '#buttons',
+  data: {
+  },
+  methods: {
+    test: function(){
+      console.log("testar");
+    },
+    click: function() {
+    var ut = document.getElementbyId("buttons");
+    //var name = createTextNode(ut.name);
+    if(ut.checked){
+        console.log(ut.name);
+      }
+    }
+  }
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* global sharedVueStuff, Vue, socket */
-'use strict';
+/*'use strict';
 
 function getRandomInt(min, max) {
   min = Math.ceil(min);
@@ -39,4 +94,4 @@ new Vue({
       socket.emit('order', {orderId: getOrderNumber(), orderItems: orderItems});
     }
   }
-});
+});*/

@@ -1,66 +1,4 @@
-var drinks = [
-  {
-    "name": "Gränges",
-    "img": "http://www.spendrups.se/globalassets/inriver/resources/granges.jpg?format=jpg"
-  },
-  {
-    "name": "East india",
-    "img": "https://theyearinbeer.files.wordpress.com/2012/07/brooklyn-east-india-pale-ale.jpeg?w=240"
-    
-  },
-  {
-    "name": "Somersby",
-    "img": "https://www.brandsoftheworld.com/sites/default/files/styles/logo-thumbnail/public/062015/somersby_logo_2012_vertical.png?itok=5V3xNtOD"
-  },
-  {
-    "name": "Strongbow",
-    "img": "https://s-media-cache-ak0.pinimg.com/736x/02/e3/49/02e3490373bf3571648d8005a7637895.jpg"
-  },
-  {
-    "name": "Coca-cola",
-    "img": "https://www.cocacola.se/content/dam/GO/CokeZone/Common/global/logo/logodesktop/coca-cola-logo-260x260.png"
-  },
-  {
-    "name": "Fanta",
-    "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Fanta_logo_global.svg/200px-Fanta_logo_global.svg.png"
-  }
-]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*{
+{
   "foods": [
     {
     "order": 1,
@@ -103,4 +41,4 @@ var drinks = [
       ]
     }
   ]
-}*/
+}
