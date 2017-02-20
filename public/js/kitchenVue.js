@@ -15,15 +15,15 @@ var table = 1;
 // ***************************
 function sendOrder() {
     var order = ["Table " + table, "2, Burger", "1, Soup"];
-    table++;
     displayNewOrder(order);
+	table++;
 }
 
 function displayNewOrder(order) {
     var pointer = document.getElementById('ongoing');
-    var div   = document.createElement('div');
+    var div     = document.createElement('div');
     div.setAttribute('class', 'orderClass');
-    div.append(order[0]); // TABLE#
+    div.append(order[0]); // the TABLE#
     div.append(createButton());
     for(var i=1; i < order.length; i++) {
         div.append(order[i]); // the FOOD
@@ -35,11 +35,21 @@ function displayNewOrder(order) {
 
 // ***************************
 function changeRdy() {
-    console.log("changeRdy");
+    console.log("*** changeRdy ***");
     var newParent = document.getElementById('completed');
     var oldParent = document.getElementById('ongoing');
 
-    newParent.appendChild(oldParent.childNodes[0]);
+	var btn = this.id;
+	console.log("this.id: "+btn);
+	var buttons = document.getElementsByName("rdyButton");
+	var i=0;
+	for (; i < buttons.length;) {
+		console.log("buttons[i].id: " + buttons[i].id);
+    	if(btn == buttons[i].id) 
+        	break;
+		i++;
+	}
+	newParent.appendChild(oldParent.childNodes[i]);
 }
 
 // ***************************
@@ -51,6 +61,7 @@ function createButton () {
     button.setAttribute('type', 'submit');
     button.setAttribute('class', 'rdyButton');
     button.setAttribute('name', 'rdyButton');
+	button.setAttribute('id', "btnid:" + table);
     button.addEventListener('click', changeRdy);
     // button.setAttribute('v-on:click', changeRdy);
     button.append(img);
