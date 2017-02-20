@@ -1,0 +1,27 @@
+table {
+    width: 100%;
+    align-items: center;
+}
+th {
+    border: 1px solid black;
+}
+table {
+    position: fixed;
+}
+
+/*****************************/
+.orderClass {
+    border: 2px dashed teal;
+    margin: 2%;
+}
+
+.rdyButton {
+    background-color: orange;
+    margin: 1%;
+}
+
+
+/*****************************/
+#ongoing {
+
+}

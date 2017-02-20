@@ -1,17 +1,49 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <title>Nationsköket</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Nationsköket</title>
-  <link rel="stylesheet" href="css/nationPub.css">
+  <link rel="stylesheet" href="../public/css/kitchen.css">
+  <script src="../public/js/kitchenScript.js"></script>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
 </head>
+<body>
+    <header>
+        <script>docLoaded(kitchenPageLoaded);</script>
+        KITCHEN
+    </header>
+
+    <section>
+        <button v-on:click='send' id='knapp' type=submit></button>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Ongoing orders</th>
+                    <th>Finished orders</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id='ongoing'>  </td>
+                    <td id='completed'></td>
+                </tr>
+            </tbody>
+        </table>
+
+    </section>
+    <script src="../public/js/kitchenVue.js"></script>
+</body>
+</html>
+
+<!--
 <body>
   <div id="orders">
     <h1>{{ uiLabels.ordersInQueue }}</h1>
     <ol>
-      <li v-for="(item, key) in orders" v-if="!item.done"> 
-        {{ key }} : {{ item.orderItems.join(', ') }} 
+      <li v-for="(item, key) in orders" v-if="!item.done">
+        {{ key }} : {{ item.orderItems.join(', ') }}
         <button v-on:click="markDone(key)">
           {{uiLabels.ready}}
         </button>
@@ -19,7 +51,7 @@
     </ol>
         <h1>{{ uiLabels.ordersFinished }}</h1>
     <ol>
-      <li v-for="(item, key) in orders" v-if="item.done"> 
+      <li v-for="(item, key) in orders" v-if="item.done">
         {{ key }} : {{ item.orderItems.join(', ') }}
       </li>
     </ol>
@@ -30,3 +62,4 @@
   <script src="js/kitchen.js"></script>
 </body>
 </html>
+-->
