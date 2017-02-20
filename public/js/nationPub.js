@@ -9,12 +9,21 @@ function docLoaded(fn){
 
 function choose(clicked_id){
   return function() {
-    var order = document.createElement('div');
-    console.log(clicked_id);
-    order.append(document.getElementById(clicked_id).name);
-    //order.append(document.getElementById(clicked_id).value);    
-    document.getElementById("order").appendChild(order);
-    console.log("i choose funktionen");
+    var i = 0;
+    var arr = ['Gränges'];
+    for(i; i <= arr.length; i++){
+      if(document.getElementById(clicked_id).name === arr[i]){
+        console.log("same");
+      }
+    }
+      var order = document.createElement('div');
+      var price = document.createElement('div');
+      order.append(document.getElementById(clicked_id).name);
+      price.append(document.getElementById(clicked_id).value + "kr");
+      arr.push(document.getElementById(clicked_id).name);
+      document.getElementById("order").appendChild(order);
+      document.getElementById("price").appendChild(price);
+      console.log(arr);
   }
 }
 
@@ -33,7 +42,7 @@ function createButton(img, name, id, price){
   item.setAttribute('width', '150px');
   item.setAttribute('height', '150px');
   item.setAttribute('name', name);
-  item.setAttribute('value', price);
+  item.value = price;
   item.setAttribute('id', id);
   button.addEventListener('click', choose(id));
   button.appendChild(item);
@@ -72,78 +81,67 @@ function displayDrinks(){
   el.appendChild(tr);
   var td = document.createElement('TD');
   tr.appendChild(td);
-  var button = createButton('http://www.spendrups.se/globalassets/inriver/resources/granges.jpg?format=jpg', 'Gränges', 'buttons1', '29kr');
+  var button = createButton('http://www.spendrups.se/globalassets/inriver/resources/granges.jpg?format=jpg', 'Gränges', 'buttons1', 29);
   td.appendChild(button);
 
   var td = document.createElement('TD');
   tr.appendChild(td);
-  var button = createButton('https://theyearinbeer.files.wordpress.com/2012/07/brooklyn-east-india-pale-ale.jpeg?w=240', 'East india', 'buttons2', '37kr');
+  var button = createButton('https://theyearinbeer.files.wordpress.com/2012/07/brooklyn-east-india-pale-ale.jpeg?w=240', 'East india', 'buttons2', 37);
   td.appendChild(button);
 
   var td = document.createElement('TD');
   tr.appendChild(td);
-  var button = createButton('https://www.brandsoftheworld.com/sites/default/files/styles/logo-thumbnail/public/062015/somersby_logo_2012_vertical.png?itok=5V3xNtOD', 'Somersby', 'buttons3', '29kr');
+  var button = createButton('https://www.brandsoftheworld.com/sites/default/files/styles/logo-thumbnail/public/062015/somersby_logo_2012_vertical.png?itok=5V3xNtOD', 'Somersby', 'buttons3', 29);
   td.appendChild(button);
 
   var td = document.createElement('TD');
   tr.appendChild(td);
-  var button = createButton('https://www.cocacola.se/content/dam/GO/CokeZone/Common/global/logo/logodesktop/coca-cola-logo-260x260.png', 'Coca-cola', 'buttons4', '25kr');
+  var button = createButton('https://www.cocacola.se/content/dam/GO/CokeZone/Common/global/logo/logodesktop/coca-cola-logo-260x260.png', 'Coca-cola', 'buttons4', 25);
   td.appendChild(button);
-
-  var td = document.createElement('TD');
-  tr.appendChild(td);
 
   var tr = document.createElement('TR');
   el.appendChild(tr);
   var td = document.createElement('TD');
   tr.appendChild(td);
-  var button = createButton('https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Brookylnbrewery.svg/215px-Brookylnbrewery.svg.png', 'Brooklyn lager', 'buttons5', '37kr');
+  var button = createButton('https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Brookylnbrewery.svg/215px-Brookylnbrewery.svg.png', 'Brooklyn lager', 'buttons5', 37);
   td.appendChild(button);
 
   var td = document.createElement('TD');
   tr.appendChild(td);
-  var button = createButton('https://upload.wikimedia.org/wikipedia/en/6/66/Large_brewdog-logo.gif', 'Brew dog', 'buttons6', '39kr');
+  var button = createButton('https://upload.wikimedia.org/wikipedia/en/6/66/Large_brewdog-logo.gif', 'Brew dog', 'buttons6', 39);
   td.appendChild(button);
 
   var td = document.createElement('TD');
   tr.appendChild(td);
-  var button = createButton('https://s-media-cache-ak0.pinimg.com/736x/02/e3/49/02e3490373bf3571648d8005a7637895.jpg', 'Strongbow', 'buttons7', '32kr');
+  var button = createButton('http://www.cluverjack.com/wp-content/uploads/2014/11/CJ-logo.png', 'Cluver and Jack', 'buttons7', 32);
   td.appendChild(button);
 
   var td = document.createElement('TD');
   tr.appendChild(td);
-  var button = createButton('https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Fanta_logo_global.svg/200px-Fanta_logo_global.svg.png', 'Fanta', 'buttons8', '25kr');
+  var button = createButton('http://www.officialpsds.com/images/thumbs/Fanta-Logo-Remade-psd64509.png', 'Fanta', 'buttons8', 25);
   td.appendChild(button);
-
-  var td = document.createElement('TD');
-  tr.appendChild(td);
 
   var tr = document.createElement('TR');
   el.appendChild(tr);
   var td = document.createElement('TD');
   tr.appendChild(td);
-  var button = createButton('http://capdesign.se/wp-content/uploads/2012/01/2226368534.jpg', 'Falcon', 'buttons9', '31kr');
+  var button = createButton('http://capdesign.se/wp-content/uploads/2012/01/2226368534.jpg', 'Falcon', 'buttons9', 31);
   td.appendChild(button);
 
   var td = document.createElement('TD');
   tr.appendChild(td);
-  var button = createButton('https://itsjustadogbook.files.wordpress.com/2012/01/lagunitas-beer-dog-logo2.jpg', 'Langunitas', 'buttons10', '37kr');
+  var button = createButton('https://itsjustadogbook.files.wordpress.com/2012/01/lagunitas-beer-dog-logo2.jpg', 'Langunitas', 'buttons10', 37);
   td.appendChild(button);
 
   var td = document.createElement('TD');
   tr.appendChild(td);
-  var button = createButton('http://thornabysportsandleisure.com/wp-content/uploads/2013/02/Woodpecker-Premium-Logo.jpg', 'Woodpecker', 'buttons11', '37kr');
+  var button = createButton('http://thornabysportsandleisure.com/wp-content/uploads/2013/02/Woodpecker-Premium-Logo.jpg', 'Woodpecker', 'buttons11', 37);
   td.appendChild(button);
 
   var td = document.createElement('TD');
   tr.appendChild(td);
-  var button = createButton('https://image.jimcdn.com/app/cms/image/transf/none/path/safbe48c5383f651b/image/i86894699fc676d37/version/1475519788/image.jpg', 'Sprite', 'buttons12', '25kr');
+  var button = createButton('https://image.jimcdn.com/app/cms/image/transf/none/path/safbe48c5383f651b/image/i86894699fc676d37/version/1475519788/image.jpg', 'Sprite', 'buttons12', 25);
   td.appendChild(button);
-
-  var td = document.createElement('TD');
-  tr.appendChild(td);
-
-
 }
 
 function displayFoods(){
@@ -165,41 +163,41 @@ function displayFoods(){
   el.appendChild(tr);
   var td = document.createElement('TD');
   tr.appendChild(td);
-  var button = createButton('https://i0.wp.com/freepngimages.com/wp-content/uploads/2016/11/bacon-burger.png?fit=624%2C624', 'Värmland\'s', 'buttons13', '62kr');
+  var button = createButton('https://i0.wp.com/freepngimages.com/wp-content/uploads/2016/11/bacon-burger.png?fit=624%2C624', 'Värmland\'s', 'buttons13', 62);
   td.appendChild(button);
 
   var td = document.createElement('TD');
   tr.appendChild(td);
-  var button = createButton('http://i.imgur.com/x81kQWI.png', 'Fries', 'buttons14', '24kr');
-  td.appendChild(button);
-
-  var tr = document.createElement('TR');
-  el.appendChild(tr);
-  var td = document.createElement('TD');
-  tr.appendChild(td);
-  var button = createButton('http://www.max.se/ImageVaultFiles/id_2443/cf_22/Burgers-Halloumi.jpg', 'Halloumi', 'buttons15', '58kr');
-  td.appendChild(button);
-
-  var td = document.createElement('TD');
-  tr.appendChild(td);
-  var button = createButton('http://www.cleothailand.com/wp-content/uploads/2015/08/Salad.jpg', 'Salad', 'buttons16', '21kr');
+  var button = createButton('http://pngplay.com/wp-content/uploads/2016/07/French-Fries-PNG-9.png', 'Fries', 'buttons14', 24);
   td.appendChild(button);
 
   var tr = document.createElement('TR');
   el.appendChild(tr);
   var td = document.createElement('TD');
   tr.appendChild(td);
-  var button = createButton('http://cdn.firstwefeast.com/assets/2014/09/wendys-pulled-pork-sandwich.png', 'Pulled pork', 'buttons17', '67kr');
+  var button = createButton('http://www.max.se/ImageVaultFiles/id_2443/cf_22/Burgers-Halloumi.jpg', 'Halloumi', 'buttons15', 58);
   td.appendChild(button);
 
   var td = document.createElement('TD');
   tr.appendChild(td);
-  var button = createButton('http://www.albaik.com/media/thumbnail/meal-spotlight-image/be797d1fba47fbf010ac1c9b8f114557/20120722_Garlic-Sauce.png', 'Garlic sauce', 'buttons18', '10kr');
+  var button = createButton('http://www.cleothailand.com/wp-content/uploads/2015/08/Salad.jpg', 'Salad', 'buttons16', 21);
+  td.appendChild(button);
+
+  var tr = document.createElement('TR');
+  el.appendChild(tr);
+  var td = document.createElement('TD');
+  tr.appendChild(td);
+  var button = createButton('http://www.zeppelin-restaurant.de/images/Gerichte_freigestellt/pulled_pork_700.png', 'Pulled pork', 'buttons17', 67);
+  td.appendChild(button);
+
+  var td = document.createElement('TD');
+  tr.appendChild(td);
+  var button = createButton('http://www.oporto.co.nz/wp-content/uploads/2015/09/sauce_garlic.102266.png', 'Garlic sauce', 'buttons18', 10);
   td.appendChild(button);
 
 }
 
-function displayOrder(pressed){
+function displayOrder(){
   var el = document.getElementById("order");
   var tr1 = document.createElement('TR');
   el.appendChild(tr1);
@@ -207,10 +205,20 @@ function displayOrder(pressed){
   tr1.appendChild(th);
   var txt = document.createTextNode('Current order');
   th.appendChild(txt);
-  var tr2 = document.createElement('TR');
-  el.appendChild(tr2);
-
-
-
+  var el = document.getElementById("price");
+  var tr1 = document.createElement('TR');
+  el.appendChild(tr1);
+  var th = document.createElement('TH');
+  tr1.appendChild(th);
+  var txt = document.createTextNode('Price');
+  th.appendChild(txt);
 
 }
+
+
+
+
+
+
+
+

@@ -35,11 +35,25 @@ button{
 	float: left;
 
 }
+table#drink{
+	padding-right: 10px;
+	border-right: 2px solid black;
+}
+table#food{
+	padding-right: 10px;
+	border-right: 2px solid black;
+}
 .bord{
-	border: 2px solid black;
+	/*border: 2px solid black;*/
 	table-layout: fixed;
 	height: 550px;
-	width: 250px;
 	float: left;
+	margin: 0px 5px 5px 10px
+}
+.bord1{
+	table-layout: fixed;
+	height: 550px;
+	float: left;
+	margin: 0px 5px 5px 5px
 }
 
