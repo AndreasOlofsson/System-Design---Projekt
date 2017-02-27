@@ -23,5 +23,11 @@ table {
 
 /*****************************/
 #ongoing {
+	vertical-align: top;
+	width: 50%;
+}
 
+#completed {
+	vertical-align: top;
+	width: 50%;
 }
