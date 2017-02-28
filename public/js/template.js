@@ -1,6 +1,9 @@
 var templater = {
 	create: function(name, data) {},
 	loadTemplates: function(node) {},
+	getRootNode: function(node) {},
+	getData: function(node, name) {},
+	getNode: function(node, name) {},
 	templates: {}
 };
 
@@ -16,18 +19,21 @@ templater.create = function(name, data) {
 	}
 
 	var instance = template.node.cloneNode(true);
-	var original_instance = instance;
+	instance.__templater__ = {
+		tags: {},
+		data: {}
+	};
 
 	if(data) {
 		for(var varName in data) {
 			if(template.variables[varName]) {
-				var node = instance;
-
-				for(var i = 0; i < template.variables[varName].path.length; i++) {
-					node = node.children[template.variables[varName].path[i]];
-				}
-
 				if(template.variables[varName].type == 0) {
+					var node = instance;
+
+					for(var i = 0; i < template.variables[varName].path.length; i++) {
+						node = node.children[template.variables[varName].path[i]];
+					}
+
 					while(node.childNodes.length > 0) {
 						node.removeChild(node.childNodes[0]);
 					}
@@ -40,12 +46,24 @@ templater.create = function(name, data) {
 						node.append(data[varName]);
 					}
 				} else if(template.variables[varName].type == 1) {
-					node[varName] = data[varName];
+					instance.__templater__.data[varName] = data[varName];
 				}
 			}
 		}
 	}
-	
+
+	for(var varName in template.variables) {
+		if(template.variables[varName].type == 2) {
+			var node = instance;
+
+			for(var i = 0; i < template.variables[varName].path.length; i++) {
+				node = node.children[template.variables[varName].path[i]];
+			}
+
+			instance.__templater__.tags[varName] = node;
+		}
+	}
+
 	return instance;
 };
 
@@ -67,8 +85,10 @@ templater.loadTemplates = function(node) {
 
 					if(attribName === "var") {
 						variables[attrib.nodeValue] = {path: path, type: 0};
-					} else if(attribName === "member") {
+					} else if(attribName === "data") {
 						variables[attrib.nodeValue] = {path: path, type: 1};
+					} else if(attribName === "tag") {
+						variables[attrib.nodeValue] = {path: path, type: 2};
 					}
 
 					attributes.removeNamedItem(attrib.nodeName);
@@ -95,6 +115,36 @@ templater.loadTemplates = function(node) {
 		}
 	}
 };
+
+templater.getRootNode = function(node) {
+	while(node && !node.__templater__) {
+		node = node.parentNode;
+	}
+
+	return node;
+
+};
+
+templater.getData = function(node, name) {
+	node = templater.getRootNode(node);
+
+	if(!node) {
+		return null;
+	}
+
+	return node.__templater__.data[name];
+};
+
+templater.getNode = function(node, name) {
+	node = templater.getRootNode(node);
+
+	if(!node) {
+		return null;
+	}
+
+	return node.__templater__.tags[name];
+
+}
 
 window.addEventListener("load", function() {
 	templater.loadTemplates(document.body);

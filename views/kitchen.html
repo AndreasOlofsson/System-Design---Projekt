@@ -33,22 +33,13 @@
                 </tr>
             </tbody>
         </table>
-		<div style="display: none;" id="orderPrototypeContainer">
-			<div class="orderClass">
-				<div>
-					<div class="orderButton"></div>
-					<div class="orderTable"><span>1</span></div>
-				</div>
-				<div class="orderItems"></div>
-			</div>
-		</div>
 
-		<div template:define="order" template:member="changeStatus" class="orderClass">
+		<div class="orderClass" template:define="order" template:data="order">
 			<div>
-				<div class="orderButton orderButton0"></div>
+				<div class="orderButton orderButton0" template:tag="button"></div>
 				<div class="orderTable"><span template:var="table"></span></div>
 			</div>
-			<div template:var="items" class="orderItems"></div>
+			<div class="orderItems" template:var="items"></div>
 		</div>
 
 		<span template:define="orderItem" template:var="text"></span>

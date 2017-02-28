@@ -1,12 +1,9 @@
 'use strict';
 
 var vue;
-var orderPrototype;
 
 // ***************************
 function kitchenPageLoaded() { // functions specific to the index.html document
-	orderPrototype = document.getElementById("orderPrototypeContainer").children[0];
-
     displayItems();
 
 	vue = new Vue({
@@ -38,10 +35,12 @@ window.addEventListener("load", kitchenPageLoaded);
 // **************************
 var table = 1;
 
-function Order(id, table, foods) {
+function Order(id, table, foods, time) {
 	this.id = id;
 	this.table = table;
 	this.foods = foods;
+	this.status = 0;
+	this.time = time;
 }
 
 function Food(name, count, specials) {
@@ -49,11 +48,13 @@ function Food(name, count, specials) {
 	this.count = count || 1;
 	this.specials = specials;
 }
+
 // ***************************
 function sendOrder() {
-	var order = new Order(table, table, [new Food("Burger", 2), new Food("Soup", 1)]);
+	var order = new Order(table, table, [new Food("Burger", 2), new Food("Soup", 1)], new Date());
 
-	document.getElementById("ongoing").appendChild(createOrderView(order));
+	insertOrderView("ongoing", createOrderView(order));
+
 
 	table++;
 }
@@ -62,41 +63,56 @@ function createOrderView(order) {
 	var templateItems = [];
 
 	order.foods.forEach(function(food) {
-		templateItems.push(templater.create("orderItem", {text: food.count + " " + food.name}));
+		templateItems.push(templater.create("orderItem", { text: food.count + " " + food.name }));
 	});
 
-	return templater.create(
+	var view = templater.create(
 		"order",
 		{
+			order: order,
 			table: order.table,
-			items: templateItems,
-			changeStatus: function(status) {
-				this.orderButton || (this.orderButton = document.getElementsByClassName("orderButton")[0]);
+			items: templateItems
+		}
+	);
 
-				this.orderButton.className = "orderButton orderButton" + status;
+	templater.getNode(view, "button").addEventListener(
+		"click", function(e) {
+			var order = templater.getData(e.target, "order");
+
+			order.status++;
+
+			if(order.status == 2) {
+				insertOrderView("completed", templater.getRootNode(e.target));
+			} else if(order.status == 3) {
+				order.status = 0;
+				insertOrderView("ongoing", templater.getRootNode(e.target));
 			}
-		});
+
+			e.target.className = "orderButton orderButton" + order.status;
+		}
+	);
+
+	return view;
 }
 
-// ***************************
-function changeRdy(e) {
-    console.log("*** changeRdy ***");
-    var newParent = document.getElementById('completed');
-    var oldParent = document.getElementById('ongoing');
+function insertOrderView(side, view) {
+	var order = templater.getData(view, "order");
+	var list;
 
-	var btn = e.target;
-	newParent.appendChild(btn.parentElement);
-}
+	if(side === "completed") {
+		list = document.getElementById("completed");
+	} else {
+		list = document.getElementById("ongoing");
+	}
 
-// ***************************
-function createButton() {
-    var button= document.createElement('button');
-    button.setAttribute('type', 'submit');
-    button.setAttribute('class', 'rdyButton');
-    button.setAttribute('name', 'rdyButton');
-	button.setAttribute('id', "btnid:" + table);
-    button.addEventListener('click', changeRdy);
-    // button.setAttribute('v-on:click', changeRdy);
-    button.append("ready");
-    return button;
+	for(var i = 0; i < list.children.length; i++) {
+		var listOrder = templater.getData(list.children[i], "order");
+
+		if(listOrder.time > order.time) {
+			list.children[i].insertAdjacentElement("beforebegin", view);
+			return;
+		}
+	}
+
+	list.appendChild(view);
 }
