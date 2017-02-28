@@ -5,17 +5,17 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="/css/kitchen.css">
-  <script src="/js/kitchenScript.js"></script>
   <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="/js/template.js"></script>
+  <script src="/js/kitchen.js"></script>
 </head>
 <body>
     <header>
-        <script>docLoaded(kitchenPageLoaded);</script>
-        KITCHEN
+        <title>KITCHEN</title>
     </header>
 
     <section>
-        <button v-on:click='send' id='knapp' type=submit></button>
+        <button v-on:click="send" id="knapp" type="submit"></button>
 
         <table>
             <thead>
@@ -26,14 +26,33 @@
             </thead>
             <tbody>
                 <tr>
-                    <td id='ongoing'>  </td>
-                    <td id='completed'></td>
+					<td id="ongoing">
+
+					</td>
+                    <td id="completed"></td>
                 </tr>
             </tbody>
         </table>
+		<div style="display: none;" id="orderPrototypeContainer">
+			<div class="orderClass">
+				<div>
+					<div class="orderButton"></div>
+					<div class="orderTable"><span>1</span></div>
+				</div>
+				<div class="orderItems"></div>
+			</div>
+		</div>
 
+		<div template:define="order" template:member="changeStatus" class="orderClass">
+			<div>
+				<div class="orderButton orderButton0"></div>
+				<div class="orderTable"><span template:var="table"></span></div>
+			</div>
+			<div template:var="items" class="orderItems"></div>
+		</div>
+
+		<span template:define="orderItem" template:var="text"></span>
     </section>
-    <script src="/js/kitchenVue.js"></script>
 </body>
 </html>
 
