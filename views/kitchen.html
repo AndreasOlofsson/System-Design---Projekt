@@ -43,9 +43,9 @@
 			</div>
 		</div>
 
-		<div template:define="order" class="orderClass">
+		<div template:define="order" template:member="changeStatus" class="orderClass">
 			<div>
-				<div class="orderButton"></div>
+				<div class="orderButton orderButton0"></div>
 				<div class="orderTable"><span template:var="table"></span></div>
 			</div>
 			<div template:var="items" class="orderItems"></div>

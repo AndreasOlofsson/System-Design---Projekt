@@ -16,33 +16,36 @@ templater.create = function(name, data) {
 	}
 
 	var instance = template.node.cloneNode(true);
+	var original_instance = instance;
 
 	if(data) {
 		for(var varName in data) {
 			if(template.variables[varName]) {
 				var node = instance;
 
-				for(var i = 0; i < template.variables[varName].length; i++) {
-					node = node.children[template.variables[varName][i]];
+				for(var i = 0; i < template.variables[varName].path.length; i++) {
+					node = node.children[template.variables[varName].path[i]];
 				}
 
-				templater._debug = node;
+				if(template.variables[varName].type == 0) {
+					while(node.childNodes.length > 0) {
+						node.removeChild(node.childNodes[0]);
+					}
 
-				while(node.childNodes.length > 0) {
-					node.removeChild(node.childNodes[0]);
-				}
-
-				if(data[varName] instanceof Array) {
-					data[varName].forEach(function(item) {
-						node.append(item);
-					});
-				} else {
-					node.append(data[varName]);
+					if(data[varName] instanceof Array) {
+						data[varName].forEach(function(item) {
+							node.append(item);
+						});
+					} else {
+						node.append(data[varName]);
+					}
+				} else if(template.variables[varName].type == 1) {
+					node[varName] = data[varName];
 				}
 			}
 		}
 	}
-
+	
 	return instance;
 };
 
@@ -63,8 +66,13 @@ templater.loadTemplates = function(node) {
 					var attribName = attrib.nodeName.substr("template:".length);
 
 					if(attribName === "var") {
-						variables[attrib.nodeValue] = path;
+						variables[attrib.nodeValue] = {path: path, type: 0};
+					} else if(attribName === "member") {
+						variables[attrib.nodeValue] = {path: path, type: 1};
 					}
+
+					attributes.removeNamedItem(attrib.nodeName);
+					i--;
 				}
 			}
 
@@ -78,7 +86,10 @@ templater.loadTemplates = function(node) {
 
 		templater.templates[name] = {node: node, variables: variables};
 	} else {
-		var children = node.children;
+		var children = [];
+		for(var i = 0; i < node.children.length; i++) {
+			children.push(node.children[i]);
+		}
 		for(var i = 0; i < children.length; i++) {
 			templater.loadTemplates(children[i]);
 		}

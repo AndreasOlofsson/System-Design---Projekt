@@ -59,37 +59,23 @@ function sendOrder() {
 }
 
 function createOrderView(order) {
-	var view = orderPrototype.cloneNode(true);
-
-	view.getElementsByClassName("orderTable")[0].children[0].innerText = order.table;
-	var itemsView = view.getElementsByClassName("orderItems")[0];
-
-	order.foods.forEach(function(food) {
-		var itemView = document.createElement("span");
-		itemView.innerText = food.count + " " + food.name;
-		itemsView.appendChild(itemView);
-	});
-
-	view.changeState = function(state) {
-		if(state == 0) {
-			
-		}
-	};
-
 	var templateItems = [];
 
 	order.foods.forEach(function(food) {
 		templateItems.push(templater.create("orderItem", {text: food.count + " " + food.name}));
 	});
 
-	templater.create(
+	return templater.create(
 		"order",
 		{
 			table: order.table,
-			items: templateItems
-		});
+			items: templateItems,
+			changeStatus: function(status) {
+				this.orderButton || (this.orderButton = document.getElementsByClassName("orderButton")[0]);
 
-	return view;
+				this.orderButton.className = "orderButton orderButton" + status;
+			}
+		});
 }
 
 // ***************************
