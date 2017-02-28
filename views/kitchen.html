@@ -42,7 +42,10 @@
 			<div class="orderItems" template:var="items"></div>
 		</div>
 
-		<span template:define="orderItem" template:var="text"></span>
+		<div template:define="orderItem">
+			<span template:var="text"></span>
+			<div class="orderItemSpecials" template:var="specials"></div>
+		</div>
     </section>
 </body>
 </html>

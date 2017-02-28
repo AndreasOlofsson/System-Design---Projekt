@@ -102,3 +102,9 @@ table {
 .orderItems > *:not(:first-child) {
 	margin-top: 0.25em;
 }
+
+.orderItemSpecials {
+	padding-left: 1.5em;
+	font-size: 14pt;
+	color: #FF7070;
+}

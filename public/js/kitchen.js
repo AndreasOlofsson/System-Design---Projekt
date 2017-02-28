@@ -51,10 +51,9 @@ function Food(name, count, specials) {
 
 // ***************************
 function sendOrder() {
-	var order = new Order(table, table, [new Food("Burger", 2), new Food("Soup", 1)], new Date());
+	var order = new Order(table, table, [new Food("Burger", 2, ["no onion"]), new Food("Soup", 1)], new Date());
 
 	insertOrderView("ongoing", createOrderView(order));
-
 
 	table++;
 }
@@ -63,7 +62,28 @@ function createOrderView(order) {
 	var templateItems = [];
 
 	order.foods.forEach(function(food) {
-		templateItems.push(templater.create("orderItem", { text: food.count + " " + food.name }));
+		if(food.specials) {
+			var specialViews = [];
+
+			food.specials.forEach(function(special) {
+				specialViews.push(special);
+			});
+
+			templateItems.push(templater.create(
+				"orderItem",
+				{
+					text: food.count + " " + food.name,
+					specials: specialViews
+				}
+			));
+		} else {
+			templateItems.push(templater.create(
+				"orderItem",
+				{
+					text: food.count + " " + food.name
+				}
+			));
+		}
 	});
 
 	var view = templater.create(
