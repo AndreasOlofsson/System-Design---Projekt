@@ -81,6 +81,7 @@ table {
 
 .orderTable * {
 	display: block;
+	font-size: 24pt;
 	position: relative;
 	top: 50%;
 	transform: translateY(-50%);

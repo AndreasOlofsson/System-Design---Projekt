@@ -76,6 +76,19 @@ function createOrderView(order) {
 		}
 	};
 
+	var templateItems = [];
+
+	order.foods.forEach(function(food) {
+		templateItems.push(templater.create("orderItem", {text: food.count + " " + food.name}));
+	});
+
+	templater.create(
+		"order",
+		{
+			table: order.table,
+			items: templateItems
+		});
+
 	return view;
 }
 
