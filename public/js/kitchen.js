@@ -1,9 +1,12 @@
 'use strict';
 
 var vue;
+var orderPrototype;
 
 // ***************************
 function kitchenPageLoaded() { // functions specific to the index.html document
+	orderPrototype = document.getElementById("orderPrototypeContainer").children[0];
+
     displayItems();
 
 	vue = new Vue({
@@ -48,24 +51,33 @@ function Food(name, count, specials) {
 }
 // ***************************
 function sendOrder() {
-    var order = ["Table " + table, "2, Burger", "1, Soup"];
-    displayNewOrder(order);
+	var order = new Order(table, table, [new Food("Burger", 2), new Food("Soup", 1)]);
+
+	document.getElementById("ongoing").appendChild(createOrderView(order));
+
 	table++;
 }
 
-function displayNewOrder(order) {
-    var pointer = document.getElementById('ongoing');
-    var div     = document.createElement('div');
-    div.setAttribute('class', 'orderClass');
-    div.append(order[0]); // the TABLE#
-    div.append(createButton());
-    for(var i=1; i < order.length; i++) {
-        div.append(order[i]); // the FOOD
-    }
-    pointer.appendChild(div);
+function createOrderView(order) {
+	var view = orderPrototype.cloneNode(true);
+
+	view.getElementsByClassName("orderTable")[0].children[0].innerText = order.table;
+	var itemsView = view.getElementsByClassName("orderItems")[0];
+
+	order.foods.forEach(function(food) {
+		var itemView = document.createElement("span");
+		itemView.innerText = food.count + " " + food.name;
+		itemsView.appendChild(itemView);
+	});
+
+	view.changeState = function(state) {
+		if(state == 0) {
+			
+		}
+	};
+
+	return view;
 }
-
-
 
 // ***************************
 function changeRdy(e) {
