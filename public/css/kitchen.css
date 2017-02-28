@@ -11,7 +11,7 @@ table {
 
 /*****************************/
 .orderClass {
-    border: 2px dashed teal;
+    border: 2px solid teal;
     margin: 2%;
 }
 
@@ -30,4 +30,73 @@ table {
 #completed {
 	vertical-align: top;
 	width: 50%;
+}
+
+.orderClass {
+	padding: 0.5em;
+}
+
+.orderClass > * {
+	display: inline-block;
+}
+
+.orderClass > *:not(:first-child) {
+	margin-left: 0.5em;
+}
+
+.orderButton {
+	background-color: #FF0000;
+	width: 4em;
+	height: 4em;
+	border-radius: 0.5em;
+}
+
+.orderButton0 {
+	border: solid;
+	border-color: rgba(0, 0, 0, 0.4);
+	border-width: 0.5em;
+}
+
+.orderButton1 {
+	background-color: #000000;
+}
+
+.orderButton2 {
+	background-color: #00FF00;
+}
+
+.orderTable {
+	border-style: solid;
+	border-color: rgba(0, 0, 0, 0.2);
+	border-width: 0.125em;
+	border-radius: 2em;
+
+	width: 3.75em;
+	height: 3.75em;
+
+	margin-top: 0.5em;
+
+	text-align: center;
+}
+
+.orderTable * {
+	display: block;
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	-webkit-transform: translateY(-50%);
+}
+
+.orderItems {
+	vertical-align: top;
+}
+
+.orderItems > * {
+	display: block;
+	font-size: 18pt;
+}
+
+.orderItems > *:not(:first-child) {
+	margin-top: 0.25em;
 }
