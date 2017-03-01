@@ -17,6 +17,8 @@ function kitchenPageLoaded() { // functions specific to the index.html document
 			}
 		}
 	});
+
+	window.setInterval(updateFoodTimes, 1000);
 }
 
 // ***************************
@@ -128,11 +130,45 @@ function insertOrderView(side, view) {
 	for(var i = 0; i < list.children.length; i++) {
 		var listOrder = templater.getData(list.children[i], "order");
 
-		if(listOrder.time > order.time) {
+		if(listOrder.time < order.time) {
 			list.children[i].insertAdjacentElement("beforebegin", view);
 			return;
 		}
 	}
 
 	list.appendChild(view);
+}
+
+function updateFoodTimes() {
+	var now  = new Date();
+
+	function updateTime(node) {
+		var order = templater.getData(node, "order");
+
+		var time = Math.floor((now.getTime() - order.time.getTime()) / 1000);
+		var timeStr;
+
+		timeStr = time;
+		if(time < 60) {
+			timeStr = time + " s";
+		} else if(time < 60 * 60) {
+			timeStr = Math.floor(time / 60) + " m";
+		} else {
+			timeStr = Math.floor(time / 60 / 60) + " h " + (Math.floor(time / 60) % 60) + " m";
+		}
+
+		templater.setVariable(node, "time", timeStr + " ago");
+	};
+
+	var list = document.getElementById("ongoing");
+
+	for(var i = 0; i < list.children.length; i++) {
+		updateTime(list.children[i]);
+	}
+
+	list = document.getElementById("completed");
+
+	for(var i = 0; i < list.children.length; i++) {
+		updateTime(list.children[i]);
+	}
 }

@@ -33,11 +33,8 @@ table {
 }
 
 .orderClass {
+	display: flex;
 	padding: 0.5em;
-}
-
-.orderClass > * {
-	display: inline-block;
 }
 
 .orderClass > *:not(:first-child) {
@@ -101,6 +98,17 @@ table {
 
 .orderItems > *:not(:first-child) {
 	margin-top: 0.25em;
+}
+
+.orderClass > :last-child {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 2;
+	text-align: right;
+}
+
+.orderClass > :last-child > :not(:last-child) {
+	flex-grow: 2
 }
 
 .orderItemSpecials {

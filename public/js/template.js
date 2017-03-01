@@ -2,6 +2,7 @@ var templater = {
 	create: function(name, data) {},
 	loadTemplates: function(node) {},
 	getRootNode: function(node) {},
+	setVariable: function(node, name, value) {},
 	getData: function(node, name) {},
 	getNode: function(node, name) {},
 	templates: {}
@@ -21,7 +22,8 @@ templater.create = function(name, data) {
 	var instance = template.node.cloneNode(true);
 	instance.__templater__ = {
 		tags: {},
-		data: {}
+		data: {},
+		vars: {}
 	};
 
 	if(data) {
@@ -53,14 +55,18 @@ templater.create = function(name, data) {
 	}
 
 	for(var varName in template.variables) {
-		if(template.variables[varName].type == 2) {
+		if(template.variables[varName].type == 0 || template.variables[varName].type == 2) {
 			var node = instance;
 
 			for(var i = 0; i < template.variables[varName].path.length; i++) {
 				node = node.children[template.variables[varName].path[i]];
 			}
 
-			instance.__templater__.tags[varName] = node;
+			if(template.variables[varName].type == 0) {
+				instance.__templater__.vars[varName] = node;
+			} else if(template.variables[varName].type == 2) {
+				instance.__templater__.tags[varName] = node;
+			}
 		}
 	}
 
@@ -123,6 +129,34 @@ templater.getRootNode = function(node) {
 
 	return node;
 
+};
+
+templater.setVariable = function(node, name, value) {
+	node = templater.getRootNode(node);
+
+	if(!node) {
+		return false;
+	}
+
+	node = node.__templater__.vars[name];
+
+	if(!node) {
+		return false;
+	}
+
+	while(node.childNodes.length > 0) {
+		node.removeChild(node.childNodes[0]);
+	}
+
+	if(value instanceof Array) {
+		value.forEach(function(item) {
+			node.append(item);
+		});
+	} else {
+		node.append(value);
+	}
+
+	return true;
 };
 
 templater.getData = function(node, name) {

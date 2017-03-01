@@ -40,9 +40,13 @@
 				<div class="orderTable"><span template:var="table"></span></div>
 			</div>
 			<div class="orderItems" template:var="items"></div>
+			<div>
+				<div></div>
+				<div template:var="time"></div>
+			</div>
 		</div>
 
-		<div template:define="orderItem">
+		<div class="orderRight" template:define="orderItem">
 			<span template:var="text"></span>
 			<div class="orderItemSpecials" template:var="specials"></div>
 		</div>
