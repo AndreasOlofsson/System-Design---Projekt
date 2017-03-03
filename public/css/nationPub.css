@@ -43,17 +43,41 @@ table#food{
 	padding-right: 10px;
 	border-right: 2px solid black;
 }
-.bord{
-	/*border: 2px solid black;*/
+.amount{
 	table-layout: fixed;
-	height: 550px;
+	height: 500px;
 	float: left;
 	margin: 0px 5px 5px 10px
 }
+.bord{
+	table-layout: fixed;
+	height: 500px;
+	float: left;
+	margin: -2px 5px 5px 10px
+}
 .bord1{
 	table-layout: fixed;
-	height: 550px;
+	height: 500px;
 	float: left;
 	margin: 0px 5px 5px 5px
+}
+.sendorder{
+	margin: 0px 5px 5px 5px;
+	table-layout: fixed;
+	height: 50px;
+	float: left;
+}
+.price{
+	margin: 0px 5px 5px 5px;
+	table-layout: fixed;
+	height: 50px;
+	float: left;
+}
+.removeItem{
+	margin: 0px 5px 5px 5px;
+	table-layout: fixed;
+	border: 2px solid black;
+	height: 50px;
+	float: left;
 }
 
