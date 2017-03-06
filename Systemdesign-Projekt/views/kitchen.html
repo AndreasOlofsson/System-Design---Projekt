@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Nationsköket</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/css/kitchen.css">
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/shared.js"></script>
+  <script src="/js/template.js"></script>
+  <script src="/js/kitchen.js"></script>
+</head>
+<body>
+    <header>
+        <title>KITCHEN</title>
+    </header>
+
+    <section>
+        <button v-on:click="send" id="knapp" type="submit"></button>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Ongoing orders</th>
+                    <th>Finished orders</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+					<td id="ongoing">
+
+					</td>
+                    <td id="completed"></td>
+                </tr>
+            </tbody>
+        </table>
+
+		<div class="orderClass" template:define="order" template:data="order">
+			<div>
+				<div class="orderButton orderButton1" template:tag="button"></div>
+				<div class="orderTable"><span template:var="table"></span></div>
+			</div>
+			<div class="orderItems" template:var="items"></div>
+			<div>
+				<div></div>
+				<div template:var="time"></div>
+			</div>
+		</div>
+
+		<div class="orderRight" template:define="orderItem">
+			<span template:var="text"></span>
+			<div class="orderItemSpecials" template:var="specials"></div>
+		</div>
+    </section>
+</body>
+</html>
+
+<!--
+<body>
+  <div id="orders">
+    <h1>{{ uiLabels.ordersInQueue }}</h1>
+    <ol>
+      <li v-for="(item, key) in orders" v-if="!item.done">
+        {{ key }} : {{ item.orderItems.join(', ') }}
+        <button v-on:click="markDone(key)">
+          {{uiLabels.ready}}
+        </button>
+      </li>
+    </ol>
+        <h1>{{ uiLabels.ordersFinished }}</h1>
+    <ol>
+      <li v-for="(item, key) in orders" v-if="item.done">
+        {{ key }} : {{ item.orderItems.join(', ') }}
+      </li>
+    </ol>
+  </div>
+  <script src="/vue/vue.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="js/nationPub.js"></script>
+  <script src="js/kitchen.js"></script>
+</body>
+</html>
+-->
