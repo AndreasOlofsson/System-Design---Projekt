@@ -17,15 +17,13 @@ new Vue({
   el: '#ordering',
   mixins: [sharedVueStuff], // include stuff that goes to both diner and kitchen
   data: {
-    mainDish: [],
-    extras: []
+    mainDish: []
   },
   methods: {
     placeOrder: function() {
       // Here two ways of getting selected items are illustrated
       // 1. The Vue way, notice the data model declarations above
       var mainCourse = this.mainDish;
-      var extras = this.extras;
       // 2. The old-school way: create an array with values of checked items
       var theRest = [].filter.call(document.getElementsByName('item[]'), function(i) {
         return i.checked;
