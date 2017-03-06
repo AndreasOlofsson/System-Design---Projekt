@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="/css/kitchen.css">
   <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/shared.js"></script>
   <script src="/js/template.js"></script>
   <script src="/js/kitchen.js"></script>
 </head>
@@ -36,7 +38,7 @@
 
 		<div class="orderClass" template:define="order" template:data="order">
 			<div>
-				<div class="orderButton orderButton0" template:tag="button"></div>
+				<div class="orderButton orderButton1" template:tag="button"></div>
 				<div class="orderTable"><span template:var="table"></span></div>
 			</div>
 			<div class="orderItems" template:var="items"></div>

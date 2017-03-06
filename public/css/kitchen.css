@@ -1,6 +1,7 @@
 table {
     width: 100%;
     align-items: center;
+	font-size: 16pt;
 }
 th {
     border: 1px solid black;
@@ -47,7 +48,7 @@ table {
 	border-radius: 0.5em;
 }
 
-.orderButton0 {
+.orderButton1 {
 	border: solid;
 	border-color: rgba(0, 0, 0, 0.4);
 	border-width: 0.25em;
@@ -55,11 +56,11 @@ table {
 	height: 3.5em;
 }
 
-.orderButton1 {
+.orderButton2 {
 	background-color: #FFFF30;
 }
 
-.orderButton2 {
+.orderButton3 {
 	background-color: #00FF00;
 }
 
@@ -79,7 +80,7 @@ table {
 
 .orderTable * {
 	display: block;
-	font-size: 24pt;
+	font-size: 1.75em;
 	position: relative;
 	top: 50%;
 	transform: translateY(-50%);
@@ -93,7 +94,7 @@ table {
 
 .orderItems > * {
 	display: block;
-	font-size: 18pt;
+	font-size: 1.5em;
 }
 
 .orderItems > *:not(:first-child) {
