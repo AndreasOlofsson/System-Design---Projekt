@@ -26,7 +26,7 @@ function choose(clicked_id){
     price.append(document.getElementById(clicked_id).value + "kr");
     amount.append(amount1);
     clas.append(document.getElementById(clicked_id).class);
-    total.append(sum);
+    total.innerText = Number(document.getElementById(clicked_id).value)
     if(arr.length === 0){
       document.getElementById("order").appendChild(order);
       document.getElementById("price").appendChild(price);
@@ -55,10 +55,12 @@ function choose(clicked_id){
           document.getElementById("order").appendChild(order);
           document.getElementById("price").appendChild(price);
           document.getElementById("x").appendChild(amount);
+          arrSum[0].innerText = Number(arrSum[0].innerText) + Number(document.getElementById(clicked_id).value);
           arr.push(document.getElementById(clicked_id).name);
           arrAmount.push(amount);
           arrClass.push(document.getElementById(clicked_id).class);
-          arrSum.push(total);
+			    arrSum.push(total);
+			    break;
         }
       }
     }
