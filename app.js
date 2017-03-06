@@ -41,6 +41,10 @@ app.get('/', function(req, res) {
 app.get('/kitchen', function(req, res) {
     res.sendFile(path.join(__dirname, 'views/kitchen.html'));
 });
+// Serve table.html as subpage
+app.get('/tables', function(req, res) {
+  res.sendFile(path.join(__dirname, 'views/tables.html'));
+});
 
 loadMenu(getLabelsAndMenu().menu);
 
