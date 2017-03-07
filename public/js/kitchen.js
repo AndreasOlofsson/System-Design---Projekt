@@ -86,7 +86,6 @@ function kitchenPageLoaded() {
 	});
 
 	socket.on('statusChanged', function(data) {
-		console.log(data);
 		console.log('Status of order ' + data.id + ' changed to ' + data.status);
 
 		orders.changeStatus(data.id, data.status);
@@ -162,7 +161,9 @@ function createOrderView(order) {
 		}
 	);
 
-	templater.getNode(view, "button").addEventListener(
+	var button = templater.getNode(view, "button");
+	button.className = "orderButton orderButton" + order.status;
+	button.addEventListener(
 		"click", function(e) {
 			var order = templater.getData(e.target, "order");
 

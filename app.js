@@ -115,9 +115,7 @@ Client.prototype.orderAdded = function(id, order) {
 };
 
 Client.prototype.orderStatusChanged = function(id, status) {
-	var data = {id: id, status: status};
-	console.log(data);
-    this.socket.emit('statusChanged', data);
+    this.socket.emit('statusChanged', {id: id, status: status});
 };
 
 io.on('connection', function(socket) {

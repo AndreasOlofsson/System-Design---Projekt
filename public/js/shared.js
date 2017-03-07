@@ -19,7 +19,9 @@ function Order(table, orderItems, time) {
 }
 
 Order.copy = function(order) {
-	return new Order(order.table, OrderItem.copyAll(order.orderItems), order.time);
+	var newOrder = new Order(order.table, OrderItem.copyAll(order.orderItems), order.time);
+	newOrder.status = order.status;
+	return newOrder;
 };
 
 Order.copyAll = function(orders) {
