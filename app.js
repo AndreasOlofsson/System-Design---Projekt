@@ -79,8 +79,8 @@ var Client = function(socket) {
     var thisClient = this;
 
     socket.on('initialize', function() {
-        io.emit('initialize', {orders: orders.getAll(),
-                               labelsAndMenu: getLabelsAndMenu() });
+        socket.emit('initialize', {orders: orders.getAll(),
+								   labelsAndMenu: getLabelsAndMenu() });
     });
 
     socket.on('order', function(order) {
@@ -95,13 +95,13 @@ var Client = function(socket) {
         });
     });
 
-    socket.on('statusChanged', function(orderId, newStatus) {
-        orders.changeStatus(orderId, newStatus);
+    socket.on('statusChanged', function(data) {
+        orders.changeStatus(data.id, data.status);
+
+		console.log('Status of order ' + data.id + ' changed to ' + data.status);
 
         clients.forEach(function(client) {
-            if(client != thisClient) {
-                client.orderStatusChanged(orderId, newStatus);
-            }
+            client.orderStatusChanged(data.id, data.status);
         });
     });
 
