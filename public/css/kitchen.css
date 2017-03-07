@@ -117,3 +117,24 @@ table {
 	font-size: 14pt;
 	color: #FF7070;
 }
+
+/* ----------- */
+
+#connectionStatus {
+	font-size: 2em;
+	position: absolute;
+	bottom: 1em;
+	right: 1em;
+	background-color: #ffffff;
+	border: 0.05em solid black;
+	border-radius: 0.25em;
+	padding: 0.5em;
+}
+
+.connectionStatusConnected {
+	background-color: #30FF30 !important;
+}
+
+.connectionStatusDisconnected {
+	background-color: #FF3030 !important;
+}

@@ -95,13 +95,13 @@ var Client = function(socket) {
         });
     });
 
-    socket.on('statusChanged', function(orderId, newStatus) {
-        orders.changeStatus(orderId, newStatus);
+    socket.on('statusChanged', function(data) {
+        orders.changeStatus(data.id, data.status);
+
+		console.log('Status of order ' + data.id + ' changed to ' + data.status);
 
         clients.forEach(function(client) {
-            if(client != thisClient) {
-                client.orderStatusChanged(orderId, newStatus);
-            }
+            client.orderStatusChanged(data.id, data.status);
         });
     });
 
@@ -115,7 +115,9 @@ Client.prototype.orderAdded = function(id, order) {
 };
 
 Client.prototype.orderStatusChanged = function(id, status) {
-    this.socket.emit('statusChanged', {id: id, status: status});
+	var data = {id: id, status: status};
+	console.log(data);
+    this.socket.emit('statusChanged', data);
 };
 
 io.on('connection', function(socket) {

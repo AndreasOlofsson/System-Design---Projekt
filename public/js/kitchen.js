@@ -1,8 +1,9 @@
 'use strict';
 
-var vue, socket;
+var vue, socket, ioStatusView;
 
 // ***************************
+
 function kitchenPageLoaded() {
     displayItems();
 
@@ -18,7 +19,50 @@ function kitchenPageLoaded() {
 		}
 	});
 
+	ioStatusView = function() {
+		/*
+		 * 0 Connecting...
+		 * 1 Connected
+		 * 2 Disconnected
+		 */
+		var status = 0;
+
+		var view = document.getElementById("connectionStatus");
+		var timeout;
+
+		var connected = function() {
+			view.style.display = "";
+			status = 1;
+			view.className = "connectionStatusConnected";
+			view.innerText = "Connected";
+			timeout = window.setTimeout(function() {
+				view.style.display = "none";
+			}, 3000);
+		};
+
+		var disconnected = function() {
+			clearTimeout(timeout);
+			view.style.display = "";
+			status = 2;
+			view.className = "connectionStatusDisconnected";
+			view.innerText = "Disconnected";
+		};
+
+		return {
+			connected: connected,
+			disconnected: disconnected
+		};
+	}();
+
 	socket = io();
+
+	socket.addEventListener('connect', function(socket) {
+		ioStatusView.connected();
+	});
+
+	socket.addEventListener('disconnect', function() {
+		ioStatusView.disconnected();
+	});
 
 	socket.on('initialize', function(data) {
 		loadMenu(data.labelsAndMenu.menu);
@@ -42,6 +86,9 @@ function kitchenPageLoaded() {
 	});
 
 	socket.on('statusChanged', function(data) {
+		console.log(data);
+		console.log('Status of order ' + data.id + ' changed to ' + data.status);
+
 		orders.changeStatus(data.id, data.status);
 		updateAllOrderViews(); // TODO optimize
 	});
@@ -119,14 +166,16 @@ function createOrderView(order) {
 		"click", function(e) {
 			var order = templater.getData(e.target, "order");
 
-			order.status++;
+			socket.emit('statusChanged', {id: orders.idOf(order), status: order.status + 1});
+
+			/* order.status++;
 
 			if(order.status == OrderStatus.Finished + 1) {
 				order.status = OrderStatus.Added;
 			}
 			insertOrderView(templater.getRootNode(e.target));
 
-			e.target.className = "orderButton orderButton" + order.status;
+			e.target.className = "orderButton orderButton" + order.status;*/
 		}
 	);
 

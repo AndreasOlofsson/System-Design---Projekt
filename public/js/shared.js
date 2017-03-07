@@ -141,6 +141,10 @@ var orders = function() {
 		return orders;
 	};
 
+	var idOf = function(order) {
+		return orders.indexOf(order);
+	};
+
 	var updateOrders = function(newOrders) {
 		orders = newOrders;
 	};
@@ -158,6 +162,7 @@ var orders = function() {
 		addOrder: addOrder,
 		get: get,
 		getAll: getAll,
+		idOf: idOf,
 		updateOrders: updateOrders,
 		changeStatus: changeStatus
 	};
