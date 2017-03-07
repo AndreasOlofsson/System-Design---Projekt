@@ -70,9 +70,8 @@ var table = 0;
 
 function sendOrder() {
 	var order = new Order(table, [new OrderItem(0, 1, ["no onion"])], new Date().getTime());
-	orders.addOrder(order);
 
-	insertOrderView(createOrderView(order));
+	socket.emit('order', order);
 
 	table++;
 };
