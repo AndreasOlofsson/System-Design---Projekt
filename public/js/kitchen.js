@@ -133,8 +133,6 @@ function createOrderView(order) {
 				specialViews.push(special);
 			});
 
-			console.log(specialViews);
-
 			templateItems.push(templater.create(
 				"orderItem",
 				{
@@ -167,7 +165,11 @@ function createOrderView(order) {
 		"click", function(e) {
 			var order = templater.getData(e.target, "order");
 
-			socket.emit('statusChanged', {id: orders.idOf(order), status: order.status + 1});
+			socket.emit('statusChanged',
+						{
+							id: orders.idOf(order),
+							status: order.status == 4 ? 1 : order.status + 1
+						});
 
 			/* order.status++;
 
@@ -188,7 +190,7 @@ function insertOrderView(view) {
 	var list;
 
 	if(order.status == OrderStatus.Delivered) {
-		return;
+		list = document.getElementById("delivered");
 	} else if(order.status == OrderStatus.Finished) {
 		list = document.getElementById("completed");
 	} else {
@@ -236,6 +238,7 @@ function updateAllOrderViews() {
 
 	document.getElementById("ongoing").children.forEach(removeView);
 	document.getElementById("completed").children.forEach(removeView);
+	document.getElementById("delivered").children.forEach(removeView);
 
 	orders.getAll().forEach(function(order) {
 		var view = createOrderView(order);
@@ -257,3 +260,18 @@ if(!HTMLCollection.prototype.forEach) {
 		children.forEach(func);
 	};
 }
+
+// --------- //
+
+function showDelivered() {
+	document.getElementById('deliveredDialog').style.display = '';
+};
+
+function dismissDelivered(e) {
+	console.log(e);
+	var dialog = document.getElementById('deliveredDialog');
+	var dialogClose = document.getElementById('deliveredCloseButton');
+	if(e.target == dialog || e.target == dialogClose) {
+		dialog.style.display = 'none';
+	}
+};

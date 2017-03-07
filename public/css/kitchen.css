@@ -10,6 +10,11 @@ table {
     position: fixed;
 }
 
+#delivered {
+	display: block;
+	min-height: 3em;
+}
+
 /*****************************/
 .orderClass {
     border: 2px solid teal;
@@ -64,6 +69,10 @@ table {
 	background-color: #00FF00;
 }
 
+.orderButton4 {
+	background-color: #0000FF;
+}
+
 .orderTable {
 	border-style: solid;
 	border-color: rgba(0, 0, 0, 0.2);
@@ -116,6 +125,59 @@ table {
 	padding-left: 1.5em;
 	font-size: 14pt;
 	color: #FF7070;
+}
+
+/* ----------- */
+
+#deliveredButton {
+	position: absolute;
+	left: 0.5em;
+	bottom: 0.5em;
+	padding: 0.25em;
+	font-size: 16pt;
+}
+
+/* ----------- */
+
+#deliveredDialog {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+#deliveredDialog thead th {
+	display: flex;
+}
+
+#deliveredDialog thead th :first-child {
+	display: flex;
+	flex-grow: 2;
+	flex-direction: column;
+	justify-content: center;
+}
+
+#deliveredCloseButton {
+	width: 2em;
+	height: 2em;
+	background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB3aWR0aD0iMzJweCIgaGVpZ2h0PSIzMnB4IiB2aWV3Qm94PSIwIDAgMzIgMzIiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDMyIDMyIiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxwb2x5Z29uIGZpbGw9IiNGRjAwMDAiIHBvaW50cz0iOCw0LjAwMDQ5IDQsOC4wMDA0OSAxMiwxNi4wMDA0OSA0LDI0IDgsMjggMTYsMjAgMjQsMjggMjgsMjQgMjAuMDQ4ODMsMTUuNjc1MjkgMjgsNy44ODk2NSANCgkyNCw0LjAwMDQ5IDE2LjAwNzgxLDEyLjAxMTIzICIvPg0KPC9zdmc+DQo=');
+	background-size: cover;
+}
+
+#deliveredDialog > table {
+	position: absolute;
+	width: 50%;
+	top: 1em;
+	right: 1em;
+	padding: 0.25em;
+	background-color: #FFFFFF;
+	border: 0.05em solid black;
+	border-radius: 0.25em;
+}
+
+#deliveredSpacer {
+	min-height: 4em;
 }
 
 /* ----------- */

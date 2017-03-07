@@ -28,13 +28,28 @@
             </thead>
             <tbody>
                 <tr>
-					<td id="ongoing">
-
-					</td>
+					<td id="ongoing"></td>
                     <td id="completed"></td>
                 </tr>
             </tbody>
         </table>
+
+		<input type="submit" id="deliveredButton" value="Delivered orders" onclick="showDelivered()"></input>
+
+		<div id="deliveredDialog" style="display: none; " onclick="dismissDelivered(event)">
+			<table>
+				<thead>
+					<tr>
+						<th><div>Delivered orders</div><div id="deliveredCloseButton"></div></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th id="delivered"></th>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 
 		<div id="connectionStatus">Connecting...</div>
 

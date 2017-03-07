@@ -43,7 +43,7 @@ Order.prototype.getTimeAgoAdded = function() {
 	} else if(sec < 60 * 60) {
 		timeStr = Math.floor(sec / 60) + ' m';
 	} else {
-		timeStr = Math.floor(sec / 60 / 60) + ' h' + (Math.floor(sec / 60) % 60) + ' m';
+		timeStr = Math.floor(sec / 60 / 60) + ' h ' + (Math.floor(sec / 60) % 60) + ' m';
 	}
 
 	return timeStr + ' ago';
