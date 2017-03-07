@@ -10,13 +10,14 @@ var arr = [];
 var arrAmount = [];
 var arrClass = [];
 var arrSum = [];
+var tableNum;
 function choose(clicked_id){
 
   return function() {
     var i = 0;
     var amount1 = 1;
     var sum = 0;
-    
+
     var order = document.createElement('div');
     var price = document.createElement('div');
     var amount = document.createElement('div');
@@ -84,6 +85,28 @@ function sendOrder(){
   }
 }
 
+function chooseTable() {
+  var popup = document.getElementById('tablePopup');
+  var content = document.createElement('iframe');
+  content.src = '/tables';
+  popup.append(content);
+  popup.style.display = '';
+}
+
+function tableSelected(id) { // called from tablesScript.js -> with table number as argument!
+    var popup = document.getElementById('tablePopup');
+    popup.removeChild(popup.children[0]); // remove
+    popup.style.display = 'none';
+
+    tableNum = id;
+    console.log('table ' + tableNum);
+    var elem = document.getElementById("chosenTable");
+    elem.innerHTML = "";
+    elem.append(id);
+}
+
+
+
 function indexPageLoaded() {
   console.log("Du är i funktionen hello.");
   displayDrinks();
@@ -105,7 +128,7 @@ function createButton(img, name, id, price, clas){
   button.addEventListener('click', choose(id));
   button.appendChild(item);
   return button;
-  
+
 }
 
 function createSendButton(img, name, id){
@@ -145,9 +168,9 @@ function displayDrinks(){
   th2.appendChild(txt2);
   var th = document.createElement('TH');
   tr1.appendChild(th);
-  
 
-  
+
+
 
   var tr = document.createElement('TR');
   el.appendChild(tr);
@@ -293,17 +316,20 @@ function displayOrder(){
   tr1.appendChild(th);
   var txt = document.createTextNode('Price');
   th.appendChild(txt);
-  var el = document.getElementById("send");
+
   var tr1 = document.createElement('TR');
-  el.appendChild(tr1);
+  var el = document.getElementById("send");
   var th = document.createElement('TH');
+  el.appendChild(tr1);
   tr1.appendChild(th);
   var buttonSend = createSendButton('http://zombietechs.com/wp-content/uploads/2014/09/bump-pay-300.png', 'send', 'send1');
   th.appendChild(buttonSend);
+
   var th = document.createElement('TH');
   tr1.appendChild(th);
   var buttonSend = createSendButton('http://a.dryicons.com/images/icon_sets/travel_and_tourism_part_1/png/512x512/credit_cards.png', 'send', 'send1');
   th.appendChild(buttonSend);
+
   var el = document.getElementById("total");
   var tr1 = document.createElement('TR');
   el.appendChild(tr1);
@@ -322,14 +348,4 @@ function displayOrder(){
   th.appendChild(txt);
 
 
-
-
 }
-
-
-
-
-
-
-
-
