@@ -1,3 +1,4 @@
 function klick(obj) {
-    console.log("table# "+obj.value);
-}
+    window.parent.tableSelected(obj.value);
+}  // window.parent == diner.js
+   // run function tableSelected(obj.valie);
