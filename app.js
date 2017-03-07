@@ -7,6 +7,7 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var path = require('path');
+var fs = require('fs');
 var shared = require('./public/js/shared.js');
 
 // Add all members in 'shared.js' to the global context
@@ -27,6 +28,27 @@ var getLabelsAndMenu = function() {
     var menu = require("./data/"+ lang +"/menu.json");
     return {uiLabels: ui, menu: menu};
 };
+
+function readOrdersFromStore() {
+	console.log('Reading orders from \'orders.store\'...');
+	try {
+		var fileContents = fs.readFileSync('orders.store');
+		var newOrders = JSON.parse(fileContents);
+		newOrders = Order.copyAll(newOrders);
+		orders.updateOrders(newOrders);
+	} catch(err) {
+		if(err instanceof SyntaxError) {
+			console.log('store file corrupt!');
+			process.exit();
+		} else if(err != null && err.code == 'ENOENT') {
+			console.log('store not found');
+		} else {
+			console.log(err);
+		}
+	}
+};
+
+readOrdersFromStore();
 
 // Serve static assets from public/
 app.use(express.static(path.join(__dirname, 'public/')));
@@ -66,7 +88,7 @@ var Client = function(socket) {
 
 		var orderId = orders.addOrder(order);
 
-        console.log('order added: ' + order.toString());
+        console.log('order #' + orderId + ' added: ' + order.toString());
 
         clients.forEach(function(client) {
             client.orderAdded(orderId, order);
@@ -105,4 +127,31 @@ io.on('connection', function(socket) {
 
 http.listen(app.get('port'), function() {
     console.log('Server listening on port ' + app.get('port'));
+});
+
+// ------------------ //
+
+function storeOrders() {
+	if(orders.getAll().length == 0) {
+		try {
+			fs.unlinkSync('orders.store');
+		} catch(err) {}
+	} else {
+		console.log('Writing ' + orders.getAll().length + ' orders to \'orders.store\'... ');
+		try {
+			fs.writeFileSync('orders.store', JSON.stringify(orders.getAll()));
+		} catch(err) {
+			console.log('failed!');
+			console.log(err);
+		}
+	}
+};
+
+setInterval(storeOrders, 1000 * 60); // periodically save all orders every minute
+
+process.on('exit', function() {
+	storeOrders();
+});
+process.on('SIGINT', function() {
+	process.exit();
 });
