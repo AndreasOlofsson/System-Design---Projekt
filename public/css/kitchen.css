@@ -110,27 +110,31 @@ th {
 
 .orderOverflowMenu {
 	display: flex;
+	flex-direction: column;
 	position: relative;
 	width: 12em;
 	top: 0;
 	left: 100%;
+	padding: 0.25em;
 	transform: translateX(-100%);
 	-ms-transform: translateX(-100%);
 	-webkit-transform: translateX(-100%);
+	background-color: white;
+	border: 0.125em solid black;
 	border-radius: 0.5em;
 }
 
-.orderOverflowMenu :first-child {
+.orderOverflowMenuStatus {
 	display: flex;
 	flex-direction: row;
 }
 
-.orderOverflowMenu :first-child div {
+.orderOverflowMenuStatus > div {
 	width: 4em;
 	height: 4em;
 }
 
-.orderOverflowMenu :first-child :first-child {
+.orderOverflowMenuStatus > :first-child {
 	background-color: #FFFFFF;
 	border: 0.25em solid rgba(0, 0, 0, 0.4);
 	width: 3.5em;
@@ -139,14 +143,23 @@ th {
 }
 
 
-.orderOverflowMenu :first-child :nth-child(2) {
+.orderOverflowMenuStatus > :nth-child(2) {
 	background-color: #FFFF00;
 	border-radius: 0;
 }
 
-.orderOverflowMenu :first-child :nth-child(3) {
+.orderOverflowMenuStatus > :nth-child(3) {
 	background-color: #00FF00;
 	border-radius: 0 0.5em 0.5em 0;
+}
+
+.orderOverflowMenu > :not(:first-child) {
+	font-size: 1.25em;
+	margin: 1em;
+}
+
+.orderOverflowMenuDelete {
+	color: #FF0000;
 }
 
 .orderOverflowButton > :last-child {
@@ -250,6 +263,9 @@ th {
 	border: 0.05em solid black;
 	border-radius: 0.25em;
 	padding: 0.5em;
+	visibility: visible;
+	opacity: 1;
+	transition: opacity 0.25s, visibility 0.25s, background-color 0.25s;
 }
 
 .connectionStatusConnected {

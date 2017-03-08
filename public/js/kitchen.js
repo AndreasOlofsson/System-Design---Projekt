@@ -32,17 +32,20 @@ function kitchenPageLoaded() {
 
 		var connected = function() {
 			view.style.display = "";
+			view.style.visibility = "";
 			status = 1;
 			view.className = "connectionStatusConnected";
 			view.innerText = "Connected";
 			timeout = window.setTimeout(function() {
-				view.style.display = "none";
+				view.style.opacity = "0";
+				view.style.visibility = "hidden";
 			}, 3000);
 		};
 
 		var disconnected = function() {
 			clearTimeout(timeout);
-			view.style.display = "";
+			view.style.opacity = "1";
+			view.style.visibility = "";
 			status = 2;
 			view.className = "connectionStatusDisconnected";
 			view.innerText = "Disconnected";
