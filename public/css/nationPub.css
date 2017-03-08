@@ -79,7 +79,7 @@ table#food{
 .removeItem{
 	margin: 0px 5px 5px 5px;
 	table-layout: fixed;
-	border: 2px solid black;
+	/*border: 2px solid black;*/
 	height: 50px;
 	float: left;
 }

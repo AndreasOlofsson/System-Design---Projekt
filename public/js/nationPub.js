@@ -17,58 +17,68 @@ function choose(clicked_id){
     var i = 0;
     var amount1 = 1;
     var sum = 0;
-
-    var order = document.createElement('div');
-    var price = document.createElement('div');
-    var amount = document.createElement('div');
-    var clas = document.createElement('div');
-    var total = document.createElement('div');
-    order.append(document.getElementById(clicked_id).name);
-    price.append(document.getElementById(clicked_id).value + "kr");
-    amount.append(amount1);
-    clas.append(document.getElementById(clicked_id).class);
-    total.innerText = Number(document.getElementById(clicked_id).value)
-    if(arr.length === 0){
-      document.getElementById("order").appendChild(order);
-      document.getElementById("price").appendChild(price);
-      document.getElementById("x").appendChild(amount);
-      document.getElementById("total").appendChild(total);
-      arr.push(document.getElementById(clicked_id).name);
-      arrAmount.push(amount);
-      arrClass.push(document.getElementById(clicked_id).class);
-      arrSum.push(total);
+    var deleteButton = createDeleteButton('https://cdn4.iconfinder.com/data/icons/simplicio/128x128/notification_remove.png', 'rem', 'rem', 'delete');
+    if(clicked_id === 'rem'){
+      removeItem();
     }
     else{
-      console.log("arr not null");
-      for(i = 0; i < arr.length; i++){
-        if(document.getElementById(clicked_id).name === arr[i]){
-          var oldie = arrSum[0];
-          oldie.innerText = Number(oldie.innerText) + Number(document.getElementById(clicked_id).value);
-          console.log("same");
-          var old = arrAmount[i];
-          old.innerText++;
+      var order = document.createElement('div');
+      var price = document.createElement('div');
+      var amount = document.createElement('div');
+      var clas = document.createElement('div');
+      var total = document.createElement('div');
+      var remove = document.createElement('div');
+      order.append(document.getElementById(clicked_id).name);
+      price.append(document.getElementById(clicked_id).value + "kr");
+      amount.append(amount1);
+      clas.append(document.getElementById(clicked_id).class);
+      total.innerText = Number(document.getElementById(clicked_id).value);
+      remove.append(deleteButton);
+      if(arr.length === 0){
+        document.getElementById("order").appendChild(order);
+        document.getElementById("price").appendChild(price);
+        document.getElementById("x").appendChild(amount);
+        document.getElementById("total").appendChild(total);
+        arr.push(document.getElementById(clicked_id).name);
+        arrAmount.push(amount);
+        arrClass.push(document.getElementById(clicked_id).class);
+        arrSum.push(total);
+        document.getElementById("remove").appendChild(remove);
+
+      }
+      else{
+        console.log("arr not null");
+        for(i = 0; i < arr.length; i++){
+          if(document.getElementById(clicked_id).name === arr[i]){
+            var oldie = arrSum[0];
+            oldie.innerText = Number(oldie.innerText) + Number(document.getElementById(clicked_id).value);
+            console.log("same");
+            var old = arrAmount[i];
+            old.innerText++;
 
 
-          break;
-        }
-        else if(i === arr.length-1){
-          console.log("in else");
-          document.getElementById("order").appendChild(order);
-          document.getElementById("price").appendChild(price);
-          document.getElementById("x").appendChild(amount);
-          arrSum[0].innerText = Number(arrSum[0].innerText) + Number(document.getElementById(clicked_id).value);
-          arr.push(document.getElementById(clicked_id).name);
-          arrAmount.push(amount);
-          arrClass.push(document.getElementById(clicked_id).class);
-			    arrSum.push(total);
-			    break;
+            break;
+          }
+          else if(i === arr.length-1){
+            console.log("in else");
+            document.getElementById("order").appendChild(order);
+            document.getElementById("price").appendChild(price);
+            document.getElementById("x").appendChild(amount);
+            document.getElementById("remove").appendChild(remove);
+            arrSum[0].innerText = Number(arrSum[0].innerText) + Number(document.getElementById(clicked_id).value);
+            arr.push(document.getElementById(clicked_id).name);
+            arrAmount.push(amount);
+            arrClass.push(document.getElementById(clicked_id).class);
+  			    arrSum.push(total);
+  			    break;
+          }
         }
       }
+        console.log(arr);
+        console.log(arrAmount);
+        console.log(arrClass);
+        console.log(arrSum);
     }
-      console.log(arr);
-      console.log(arrAmount);
-      console.log(arrClass);
-      console.log(arrSum);
   }
 }
 var arrSend = [];
@@ -105,7 +115,10 @@ function tableSelected(id) { // called from tablesScript.js -> with table number
     elem.append(id);
 }
 
-
+function removeItem(){
+  console.log('remove');
+  
+}
 
 function indexPageLoaded() {
   console.log("Du är i funktionen hello.");
@@ -130,7 +143,21 @@ function createButton(img, name, id, price, clas){
   return button;
 
 }
+function createDeleteButton(img, name, id, clas){
+  var button = document.createElement('button');
+  button.setAttribute('type', 'button');
+  var item = document.createElement('img');
+  item.setAttribute('src', img);
+  item.setAttribute('width', '20px');
+  item.setAttribute('height', '20px');
+  item.setAttribute('name', name);
+  item.setAttribute('id', id);
+  item.class= clas;
+  button.addEventListener('click', choose(id));
+  button.appendChild(item);
+  return button;
 
+}
 function createSendButton(img, name, id){
   var button = document.createElement('button');
   button.setAttribute('type', 'button');
