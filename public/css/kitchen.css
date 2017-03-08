@@ -5,9 +5,7 @@ table {
 }
 th {
     border: 1px solid black;
-}
-table {
-    position: fixed;
+	font-weight: normal;
 }
 
 #delivered {
@@ -17,6 +15,7 @@ table {
 
 /*****************************/
 .orderClass {
+	font-size: 16pt;
     border: 2px solid teal;
     margin: 2%;
 }
@@ -75,7 +74,7 @@ table {
 
 .orderTable {
 	border-style: solid;
-	border-color: rgba(0, 0, 0, 0.2);
+	border-color: rgba(0, 0, 0, 0.5);
 	border-width: 0.125em;
 	border-radius: 2em;
 
@@ -89,12 +88,72 @@ table {
 
 .orderTable * {
 	display: block;
-	font-size: 1.75em;
+	font-size: 1.5em;
 	position: relative;
 	top: 50%;
 	transform: translateY(-50%);
 	-ms-transform: translateY(-50%);
 	-webkit-transform: translateY(-50%);
+}
+
+.orderOverflowContainer {
+	align-self: end;
+}
+
+.orderOverflowButton {
+	display: inline-block;
+	width: 4em;
+	height: 4em;
+	background-color: #A0A0A0;
+	border-radius: 0.5em;
+}
+
+.orderOverflowMenu {
+	display: flex;
+	position: relative;
+	width: 12em;
+	top: 0;
+	left: 100%;
+	transform: translateX(-100%);
+	-ms-transform: translateX(-100%);
+	-webkit-transform: translateX(-100%);
+	border-radius: 0.5em;
+}
+
+.orderOverflowMenu :first-child {
+	display: flex;
+	flex-direction: row;
+}
+
+.orderOverflowMenu :first-child div {
+	width: 4em;
+	height: 4em;
+}
+
+.orderOverflowMenu :first-child :first-child {
+	background-color: #FFFFFF;
+	border: 0.25em solid rgba(0, 0, 0, 0.4);
+	width: 3.5em;
+	height: 3.5em;
+	border-radius: 0.5em 0 0 0.5em;
+}
+
+
+.orderOverflowMenu :first-child :nth-child(2) {
+	background-color: #FFFF00;
+	border-radius: 0;
+}
+
+.orderOverflowMenu :first-child :nth-child(3) {
+	background-color: #00FF00;
+	border-radius: 0 0.5em 0.5em 0;
+}
+
+.orderOverflowButton > :last-child {
+	width: 4em;
+	height: 4em;
+	background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB3aWR0aD0iMzJweCIgaGVpZ2h0PSIzMnB4IiB2aWV3Qm94PSIwIDAgMzIgMzIiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDMyIDMyIiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxwb2x5Z29uIGZpbGw9IiNGRkZGRkYiIHBvaW50cz0iMTYsMjAgMTIuNTM1ODk4LDE0IDE5LjQ2NDEwMiwxNCIvPg0KPC9zdmc+');
+	background-size: cover;
 }
 
 .orderItems {
@@ -123,7 +182,7 @@ table {
 
 .orderItemSpecials {
 	padding-left: 1.5em;
-	font-size: 14pt;
+	font-size: 0.75em;
 	color: #FF7070;
 }
 
@@ -161,7 +220,7 @@ table {
 #deliveredCloseButton {
 	width: 2em;
 	height: 2em;
-	background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB3aWR0aD0iMzJweCIgaGVpZ2h0PSIzMnB4IiB2aWV3Qm94PSIwIDAgMzIgMzIiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDMyIDMyIiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxwb2x5Z29uIGZpbGw9IiNGRjAwMDAiIHBvaW50cz0iOCw0LjAwMDQ5IDQsOC4wMDA0OSAxMiwxNi4wMDA0OSA0LDI0IDgsMjggMTYsMjAgMjQsMjggMjgsMjQgMjAuMDQ4ODMsMTUuNjc1MjkgMjgsNy44ODk2NSANCgkyNCw0LjAwMDQ5IDE2LjAwNzgxLDEyLjAxMTIzICIvPg0KPC9zdmc+DQo=');
+	background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB3aWR0aD0iMzJweCIgaGVpZ2h0PSIzMnB4IiB2aWV3Qm94PSIwIDAgMzIgMzIiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDMyIDMyIiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxwb2x5Z29uIGZpbGw9IiNGRjAwMDAiIHBvaW50cz0iOCw0IDQsOCAxMiwxNiA0LDI0IDgsMjggMTYsMjAgMjQsMjggMjgsMjQgMjAsMTYgMjgsOCANCgkyNCw0IDE2LDEyIi8+DQo8L3N2Zz4NCg==');
 	background-size: cover;
 }
 

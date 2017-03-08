@@ -80,7 +80,10 @@ function OrderItem(id, count, specials) {
 }
 
 OrderItem.copy = function(orderItem) {
-	return new OrderItem(orderItem.id, orderItem.count, orderItem.specials.slice());
+	return new OrderItem(
+		orderItem.id,
+		orderItem.count,
+		orderItem.specials == null ? null : orderItem.specials.slice());
 };
 
 OrderItem.copyAll = function(orderItems) {

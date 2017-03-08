@@ -218,17 +218,9 @@ function updateFoodTimes() {
 		templater.setVariable(node, "time", order.getTimeAgoAdded());
 	};
 
-	var list = document.getElementById("ongoing");
-
-	for(var i = 0; i < list.children.length; i++) {
-		updateTime(list.children[i]);
-	}
-
-	list = document.getElementById("completed");
-
-	for(var i = 0; i < list.children.length; i++) {
-		updateTime(list.children[i]);
-	}
+	document.getElementById("ongoing").children.forEach(updateTime);
+	document.getElementById("completed").children.forEach(updateTime);
+	document.getElementById("delivered").children.forEach(updateTime);
 };
 
 function updateAllOrderViews() {

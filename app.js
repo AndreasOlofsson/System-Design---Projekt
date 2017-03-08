@@ -79,8 +79,8 @@ var Client = function(socket) {
     var thisClient = this;
 
     socket.on('initialize', function() {
-        io.emit('initialize', {orders: orders.getAll(),
-                               labelsAndMenu: getLabelsAndMenu() });
+        socket.emit('initialize', {orders: orders.getAll(),
+								   labelsAndMenu: getLabelsAndMenu() });
     });
 
     socket.on('order', function(order) {
