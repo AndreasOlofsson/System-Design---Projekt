@@ -1,8 +1,9 @@
 'use strict';
 
-var vue, socket;
+var vue, socket, ioStatusView;
 
 // ***************************
+
 function kitchenPageLoaded() {
     displayItems();
 
@@ -18,7 +19,53 @@ function kitchenPageLoaded() {
 		}
 	});
 
+	ioStatusView = function() {
+		/*
+		 * 0 Connecting...
+		 * 1 Connected
+		 * 2 Disconnected
+		 */
+		var status = 0;
+
+		var view = document.getElementById("connectionStatus");
+		var timeout;
+
+		var connected = function() {
+			view.style.display = "";
+			view.style.visibility = "";
+			status = 1;
+			view.className = "connectionStatusConnected";
+			view.innerText = "Connected";
+			timeout = window.setTimeout(function() {
+				view.style.opacity = "0";
+				view.style.visibility = "hidden";
+			}, 3000);
+		};
+
+		var disconnected = function() {
+			clearTimeout(timeout);
+			view.style.opacity = "1";
+			view.style.visibility = "";
+			status = 2;
+			view.className = "connectionStatusDisconnected";
+			view.innerText = "Disconnected";
+		};
+
+		return {
+			connected: connected,
+			disconnected: disconnected
+		};
+	}();
+
 	socket = io();
+
+	socket.addEventListener('connect', function(socket) {
+		ioStatusView.connected();
+	});
+
+	socket.addEventListener('disconnect', function() {
+		ioStatusView.disconnected();
+	});
 
 	socket.on('initialize', function(data) {
 		loadMenu(data.labelsAndMenu.menu);
@@ -42,6 +89,8 @@ function kitchenPageLoaded() {
 	});
 
 	socket.on('statusChanged', function(data) {
+		console.log('Status of order ' + data.id + ' changed to ' + data.status);
+
 		orders.changeStatus(data.id, data.status);
 		updateAllOrderViews(); // TODO optimize
 	});
@@ -87,8 +136,6 @@ function createOrderView(order) {
 				specialViews.push(special);
 			});
 
-			console.log(specialViews);
-
 			templateItems.push(templater.create(
 				"orderItem",
 				{
@@ -115,18 +162,26 @@ function createOrderView(order) {
 		}
 	);
 
-	templater.getNode(view, "button").addEventListener(
+	var button = templater.getNode(view, "button");
+	button.className = "orderButton orderButton" + order.status;
+	button.addEventListener(
 		"click", function(e) {
 			var order = templater.getData(e.target, "order");
 
-			order.status++;
+			socket.emit('statusChanged',
+						{
+							id: orders.idOf(order),
+							status: order.status == 4 ? 1 : order.status + 1
+						});
+
+			/* order.status++;
 
 			if(order.status == OrderStatus.Finished + 1) {
 				order.status = OrderStatus.Added;
 			}
 			insertOrderView(templater.getRootNode(e.target));
 
-			e.target.className = "orderButton orderButton" + order.status;
+			e.target.className = "orderButton orderButton" + order.status;*/
 		}
 	);
 
@@ -138,7 +193,7 @@ function insertOrderView(view) {
 	var list;
 
 	if(order.status == OrderStatus.Delivered) {
-		return;
+		list = document.getElementById("delivered");
 	} else if(order.status == OrderStatus.Finished) {
 		list = document.getElementById("completed");
 	} else {
@@ -166,17 +221,9 @@ function updateFoodTimes() {
 		templater.setVariable(node, "time", order.getTimeAgoAdded());
 	};
 
-	var list = document.getElementById("ongoing");
-
-	for(var i = 0; i < list.children.length; i++) {
-		updateTime(list.children[i]);
-	}
-
-	list = document.getElementById("completed");
-
-	for(var i = 0; i < list.children.length; i++) {
-		updateTime(list.children[i]);
-	}
+	document.getElementById("ongoing").children.forEach(updateTime);
+	document.getElementById("completed").children.forEach(updateTime);
+	document.getElementById("delivered").children.forEach(updateTime);
 };
 
 function updateAllOrderViews() {
@@ -186,6 +233,7 @@ function updateAllOrderViews() {
 
 	document.getElementById("ongoing").children.forEach(removeView);
 	document.getElementById("completed").children.forEach(removeView);
+	document.getElementById("delivered").children.forEach(removeView);
 
 	orders.getAll().forEach(function(order) {
 		var view = createOrderView(order);
@@ -206,4 +254,39 @@ if(!HTMLCollection.prototype.forEach) {
 
 		children.forEach(func);
 	};
+}
+
+// --------- //
+
+function showDelivered() {
+	document.getElementById('deliveredDialog').style.display = '';
+};
+
+function dismissDelivered(e) {
+	console.log(e);
+	var dialog = document.getElementById('deliveredDialog');
+	var dialogClose = document.getElementById('deliveredCloseButton');
+	if(e.target == dialog || e.target == dialogClose) {
+		dialog.style.display = 'none';
+	}
+};
+
+// ------- //
+
+function openOverflowMenu(e) {
+	var overflowMenu = templater.getNode(e.target, 'overflow-menu');
+	console.log(overflowMenu);
+	if(overflowMenu.hiding) {
+		overflowMenu.hiding = false;
+		return;
+	}
+	overflowMenu.style.opacity = '1';
+	overflowMenu.style.visibility = 'visible';
+}
+
+function closeOverflowMenu(e) {
+	var overflowMenu = templater.getNode(e.target, 'overflow-menu');
+	overflowMenu.style.opacity = '0';
+	overflowMenu.style.visibility = 'hidden';
+	overflowMenu.hiding = true;
 }

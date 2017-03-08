@@ -19,7 +19,9 @@ function Order(table, orderItems, time) {
 }
 
 Order.copy = function(order) {
-	return new Order(order.table, OrderItem.copyAll(order.orderItems), order.time);
+	var newOrder = new Order(order.table, OrderItem.copyAll(order.orderItems), order.time);
+	newOrder.status = order.status;
+	return newOrder;
 };
 
 Order.copyAll = function(orders) {
@@ -41,7 +43,7 @@ Order.prototype.getTimeAgoAdded = function() {
 	} else if(sec < 60 * 60) {
 		timeStr = Math.floor(sec / 60) + ' m';
 	} else {
-		timeStr = Math.floor(sec / 60 / 60) + ' h' + (Math.floor(sec / 60) % 60) + ' m';
+		timeStr = Math.floor(sec / 60 / 60) + ' h ' + (Math.floor(sec / 60) % 60) + ' m';
 	}
 
 	return timeStr + ' ago';
@@ -144,6 +146,10 @@ var orders = function() {
 		return orders;
 	};
 
+	var idOf = function(order) {
+		return orders.indexOf(order);
+	};
+
 	var updateOrders = function(newOrders) {
 		orders = newOrders;
 	};
@@ -161,6 +167,7 @@ var orders = function() {
 		addOrder: addOrder,
 		get: get,
 		getAll: getAll,
+		idOf: idOf,
 		updateOrders: updateOrders,
 		changeStatus: changeStatus
 	};

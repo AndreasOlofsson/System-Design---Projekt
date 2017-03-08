@@ -1,22 +1,16 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Nationsköket</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="/css/kitchen.css">
-  <script src="https://unpkg.com/vue/dist/vue.js"></script>
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="/js/shared.js"></script>
-  <script src="/js/template.js"></script>
-  <script src="/js/kitchen.js"></script>
-</head>
-<body>
-    <header>
-        <title>KITCHEN</title>
-    </header>
-
-    <section>
+	<head>
+		<title>Nationsköket</title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="/css/kitchen.css">
+		<script src="https://unpkg.com/vue/dist/vue.js"></script>
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="/js/shared.js"></script>
+		<script src="/js/template.js"></script>
+		<script src="/js/kitchen.js"></script>
+	</head>
+	<body>
         <button v-on:click="send" id="knapp" type="submit"></button>
 
         <table>
@@ -28,13 +22,30 @@
             </thead>
             <tbody>
                 <tr>
-					<td id="ongoing">
-
-					</td>
+					<td id="ongoing"></td>
                     <td id="completed"></td>
                 </tr>
             </tbody>
         </table>
+
+		<input type="submit" id="deliveredButton" value="Delivered orders" onclick="showDelivered()"></input>
+
+		<div id="deliveredDialog" style="display: none; " onclick="dismissDelivered(event)">
+			<table>
+				<thead>
+					<tr>
+						<th><div>Delivered orders</div><div id="deliveredCloseButton"></div></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th id="delivered"></th>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div id="connectionStatus">Connecting...</div>
 
 		<div class="orderClass" template:define="order" template:data="order">
 			<div>
@@ -43,7 +54,25 @@
 			</div>
 			<div class="orderItems" template:var="items"></div>
 			<div>
-				<div></div>
+				<div class="orderOverflowContainer">
+					<div class="orderOverflowButton">
+						<div onclick="openOverflowMenu(event);">
+							<div class="orderOverflowMenu" template:tag="overflow-menu" style="visibility: hidden; opacity: 0; ">
+								<div class="orderOverflowMenuStatus">
+									<div></div>
+									<div></div>
+									<div></div>
+								</div>
+								<div class="orderOverflowMenuDelete">
+									Delete order
+								</div>
+								<div class="orderOverflowMenuCancel" onclick="closeOverflowMenu(event);">
+									Cancel
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 				<div template:var="time"></div>
 			</div>
 		</div>
@@ -52,33 +81,5 @@
 			<span template:var="text"></span>
 			<div class="orderItemSpecials" template:var="specials"></div>
 		</div>
-    </section>
-</body>
+	</body>
 </html>
-
-<!--
-<body>
-  <div id="orders">
-    <h1>{{ uiLabels.ordersInQueue }}</h1>
-    <ol>
-      <li v-for="(item, key) in orders" v-if="!item.done">
-        {{ key }} : {{ item.orderItems.join(', ') }}
-        <button v-on:click="markDone(key)">
-          {{uiLabels.ready}}
-        </button>
-      </li>
-    </ol>
-        <h1>{{ uiLabels.ordersFinished }}</h1>
-    <ol>
-      <li v-for="(item, key) in orders" v-if="item.done">
-        {{ key }} : {{ item.orderItems.join(', ') }}
-      </li>
-    </ol>
-  </div>
-  <script src="/vue/vue.js"></script>
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="js/nationPub.js"></script>
-  <script src="js/kitchen.js"></script>
-</body>
-</html>
--->
