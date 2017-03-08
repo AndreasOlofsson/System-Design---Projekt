@@ -83,7 +83,7 @@ OrderItem.copy = function(orderItem) {
 	return new OrderItem(
 		orderItem.id,
 		orderItem.count,
-		orderItem.specials == null ? null : orderItem.specials.slice());
+		!orderItem.specials ? undefined : orderItem.specials.slice());
 };
 
 OrderItem.copyAll = function(orderItems) {
