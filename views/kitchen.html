@@ -56,20 +56,21 @@
 			<div>
 				<div class="orderOverflowContainer">
 					<div class="orderOverflowButton">
-						<div class="orderOverflowMenu" style="display: none;">
-							<div class="orderOverflowMenuStatus">
-								<div></div>
-								<div></div>
-								<div></div>
-							</div>
-							<div class="orderOverflowMenuDelete">
-								Delete order
-							</div>
-							<div class="orderOverflowMenuCancel">
-								Cancel
+						<div onclick="openOverflowMenu(event);">
+							<div class="orderOverflowMenu" template:tag="overflow-menu" style="visibility: hidden; opacity: 0; ">
+								<div class="orderOverflowMenuStatus">
+									<div></div>
+									<div></div>
+									<div></div>
+								</div>
+								<div class="orderOverflowMenuDelete">
+									Delete order
+								</div>
+								<div class="orderOverflowMenuCancel" onclick="closeOverflowMenu(event);">
+									Cancel
+								</div>
 							</div>
 						</div>
-						<div><!-- icon --></div>
 					</div>
 				</div>
 				<div template:var="time"></div>

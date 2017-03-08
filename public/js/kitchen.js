@@ -270,3 +270,23 @@ function dismissDelivered(e) {
 		dialog.style.display = 'none';
 	}
 };
+
+// ------- //
+
+function openOverflowMenu(e) {
+	var overflowMenu = templater.getNode(e.target, 'overflow-menu');
+	console.log(overflowMenu);
+	if(overflowMenu.hiding) {
+		overflowMenu.hiding = false;
+		return;
+	}
+	overflowMenu.style.opacity = '1';
+	overflowMenu.style.visibility = 'visible';
+}
+
+function closeOverflowMenu(e) {
+	var overflowMenu = templater.getNode(e.target, 'overflow-menu');
+	overflowMenu.style.opacity = '0';
+	overflowMenu.style.visibility = 'hidden';
+	overflowMenu.hiding = true;
+}

@@ -108,6 +108,13 @@ th {
 	border-radius: 0.5em;
 }
 
+.orderOverflowButton > div {
+	width: 4em;
+	height: 4em;
+	background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB3aWR0aD0iMzJweCIgaGVpZ2h0PSIzMnB4IiB2aWV3Qm94PSIwIDAgMzIgMzIiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDMyIDMyIiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxwb2x5Z29uIGZpbGw9IiNGRkZGRkYiIHBvaW50cz0iMTYsMjAgMTIuNTM1ODk4LDE0IDE5LjQ2NDEwMiwxNCIvPg0KPC9zdmc+');
+	background-size: cover;
+}
+
 .orderOverflowMenu {
 	display: flex;
 	flex-direction: column;
@@ -116,12 +123,12 @@ th {
 	top: 0;
 	left: 100%;
 	padding: 0.25em;
-	transform: translateX(-100%);
-	-ms-transform: translateX(-100%);
-	-webkit-transform: translateX(-100%);
+	visibility: hidden;
 	background-color: white;
 	border: 0.125em solid black;
 	border-radius: 0.5em;
+	transition: transform 0.5s, opacity 0.25s, visibility 0.25s;
+	transform: translateX(-100%);
 }
 
 .orderOverflowMenuStatus {
@@ -155,18 +162,11 @@ th {
 
 .orderOverflowMenu > :not(:first-child) {
 	font-size: 1.25em;
-	margin: 1em;
+	padding: 1em;
 }
 
 .orderOverflowMenuDelete {
 	color: #FF0000;
-}
-
-.orderOverflowButton > :last-child {
-	width: 4em;
-	height: 4em;
-	background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB3aWR0aD0iMzJweCIgaGVpZ2h0PSIzMnB4IiB2aWV3Qm94PSIwIDAgMzIgMzIiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDMyIDMyIiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxwb2x5Z29uIGZpbGw9IiNGRkZGRkYiIHBvaW50cz0iMTYsMjAgMTIuNTM1ODk4LDE0IDE5LjQ2NDEwMiwxNCIvPg0KPC9zdmc+');
-	background-size: cover;
 }
 
 .orderItems {
