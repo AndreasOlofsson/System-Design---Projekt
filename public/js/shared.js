@@ -11,7 +11,7 @@ var ItemType = {
 	SideOrder: 3
 };
 
-function Order(table, orderItems, time) {
+function Order(table, orderItems, time) { // to be sent
 	this.table = table;
 	this.orderItems = orderItems;
 	this.status = OrderStatus.Added;
