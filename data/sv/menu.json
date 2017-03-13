@@ -2,7 +2,7 @@
   "foods": [
     {
       "order": 1,
-      "label": "Hamburgare",
+      "label": "Hamburger",
       "price": 65,
       "details": [
         { "extra": "Lök",
@@ -12,7 +12,7 @@
     },
     {
       "order": 2,
-      "label": "Ostburgare",
+      "label": "Pulled Pork",
       "price": 70,
       "details": [
         { "extra": "Lök",
@@ -25,7 +25,7 @@
     },
     {
       "order": 3,
-      "label": "Veganburgare",
+      "label": "Halloumi",
       "price": 65,
       "details": [
         { "extra": "Lök",
@@ -176,13 +176,26 @@
   },
       {
       "order": 1,
-      "label": "Nachos",
+      "label": "Salad",
       "price": 30,
       "details": [
         { "extra": "Smält ost",
           "price": 10
         },
         { "extra": "Salsa",
+          "price": 10
+        }
+      ]
+  },
+    {
+      "order": 1,
+      "label": "Garlic Sauce",
+      "price": 20,
+      "details": [
+        { "extra": "Smält ost",
+          "price": 10
+        },
+        { "extra": "Stekt lök",
           "price": 10
         }
       ]

@@ -1,6 +1,7 @@
+var socket;
+
 function docLoaded(fn){
   if(document.readyState !== 'loading'){
-    console.log("hejsan!");
     fn();
   } else{
     document.addEventListener('DOMContentLoaded', fn);
@@ -11,87 +12,83 @@ var arrAmount = [];
 var arrClass = [];
 var arrSum = [];
 var tableNum;
-function choose(clicked_id){
 
+function foodNamesMapID(name) {
+    console.log("name=" + name);
+    for(var i=0; i < items.length; i++) {
+        if(items[i].name === name)
+
+            return i;
+    }
+}
+
+var orderItems = [];
+
+function choose(clicked_id){
   return function() {
+        var elem = document.getElementById(clicked_id);
+        if (elem.class === 'food') {
+            console.log("elem.name=" + elem.name);
+            console.log("foodNamesMapID=" + foodNamesMapID(elem.name));
+            var orderItem = new OrderItem(foodNamesMapID(elem.name), 1);
+            orderItems.push(orderItem);
+        }
+
     var i = 0;
     var amount1 = 1;
     var sum = 0;
-    var deleteButton = createDeleteButton('https://cdn4.iconfinder.com/data/icons/simplicio/128x128/notification_remove.png', 'rem', 'rem', 'delete');
-    if(clicked_id === 'rem'){
-      removeItem();
+
+    var order = document.createElement('div');
+    var price = document.createElement('div');
+    var amount = document.createElement('div');
+    var clas = document.createElement('div');
+    var total = document.createElement('div');
+    order.append(document.getElementById(clicked_id).name);
+    price.append(document.getElementById(clicked_id).value + "kr");
+    amount.append(amount1);
+    clas.append(document.getElementById(clicked_id).class);
+    total.innerText = Number(document.getElementById(clicked_id).value)
+    if(arr.length === 0){
+      document.getElementById("order").appendChild(order);
+      document.getElementById("price").appendChild(price);
+      document.getElementById("x").appendChild(amount);
+      document.getElementById("total").appendChild(total);
+      arr.push(document.getElementById(clicked_id).name);
+      arrAmount.push(amount);
+      arrClass.push(document.getElementById(clicked_id).class);
+      arrSum.push(total);
     }
     else{
-      var order = document.createElement('div');
-      var price = document.createElement('div');
-      var amount = document.createElement('div');
-      var clas = document.createElement('div');
-      var total = document.createElement('div');
-      var remove = document.createElement('div');
-      order.append(document.getElementById(clicked_id).name);
-      price.append(document.getElementById(clicked_id).value + "kr");
-      amount.append(amount1);
-      clas.append(document.getElementById(clicked_id).class);
-      total.innerText = Number(document.getElementById(clicked_id).value);
-      remove.append(deleteButton);
-      if(arr.length === 0){
-        document.getElementById("order").appendChild(order);
-        document.getElementById("price").appendChild(price);
-        document.getElementById("x").appendChild(amount);
-        document.getElementById("total").appendChild(total);
-        arr.push(document.getElementById(clicked_id).name);
-        arrAmount.push(amount);
-        arrClass.push(document.getElementById(clicked_id).class);
-        arrSum.push(total);
-        document.getElementById("remove").appendChild(remove);
-
-      }
-      else{
-        console.log("arr not null");
-        for(i = 0; i < arr.length; i++){
-          if(document.getElementById(clicked_id).name === arr[i]){
-            var oldie = arrSum[0];
-            oldie.innerText = Number(oldie.innerText) + Number(document.getElementById(clicked_id).value);
-            console.log("same");
-            var old = arrAmount[i];
-            old.innerText++;
+      for(i = 0; i < arr.length; i++){
+        if(document.getElementById(clicked_id).name === arr[i]){
+          var oldie = arrSum[0];
+          oldie.innerText = Number(oldie.innerText) + Number(document.getElementById(clicked_id).value);
+          var old = arrAmount[i];
+          old.innerText++;
 
 
-            break;
-          }
-          else if(i === arr.length-1){
-            console.log("in else");
-            document.getElementById("order").appendChild(order);
-            document.getElementById("price").appendChild(price);
-            document.getElementById("x").appendChild(amount);
-            document.getElementById("remove").appendChild(remove);
-            arrSum[0].innerText = Number(arrSum[0].innerText) + Number(document.getElementById(clicked_id).value);
-            arr.push(document.getElementById(clicked_id).name);
-            arrAmount.push(amount);
-            arrClass.push(document.getElementById(clicked_id).class);
-  			    arrSum.push(total);
-  			    break;
-          }
+          break;
+        }
+        else if(i === arr.length-1){
+          document.getElementById("order").appendChild(order);
+          document.getElementById("price").appendChild(price);
+          document.getElementById("x").appendChild(amount);
+          arrSum[0].innerText = Number(arrSum[0].innerText) + Number(document.getElementById(clicked_id).value);
+          arr.push(document.getElementById(clicked_id).name);
+          arrAmount.push(amount);
+          arrClass.push(document.getElementById(clicked_id).class);
+			    arrSum.push(total);
+			    break;
         }
       }
-        console.log(arr);
-        console.log(arrAmount);
-        console.log(arrClass);
-        console.log(arrSum);
     }
   }
 }
-var arrSend = [];
+
 function sendOrder(){
   return function(){
-    console.log("send");
-    for(n=0; n<arr.length; n++){
-      if(arrClass[n] === 'food'){
-        var item = arrAmount[n].innerText + ' ' + arr[n];
-        arrSend.push(item);
-        console.log(arrSend);
-      }
-    }
+    var orderToSend = new Order(tableNum, orderItems, new Date().getTime());
+    socket.emit('order', orderToSend);
   }
 }
 
@@ -115,13 +112,18 @@ function tableSelected(id) { // called from tablesScript.js -> with table number
     elem.append(id);
 }
 
-function removeItem(){
-  console.log('remove');
-  
-}
+
 
 function indexPageLoaded() {
-  console.log("Du är i funktionen hello.");
+  socket = io();
+
+  socket.on('initialize', function(data) {
+      orders.updateOrders(data.orders);
+      var labelsAndMenu = data.labelsAndMenu;
+      loadMenu(labelsAndMenu.menu)
+  });
+
+  socket.emit('initialize');
   displayDrinks();
   displayFoods();
   displayOrder();
@@ -143,21 +145,7 @@ function createButton(img, name, id, price, clas){
   return button;
 
 }
-function createDeleteButton(img, name, id, clas){
-  var button = document.createElement('button');
-  button.setAttribute('type', 'button');
-  var item = document.createElement('img');
-  item.setAttribute('src', img);
-  item.setAttribute('width', '20px');
-  item.setAttribute('height', '20px');
-  item.setAttribute('name', name);
-  item.setAttribute('id', id);
-  item.class= clas;
-  button.addEventListener('click', choose(id));
-  button.appendChild(item);
-  return button;
 
-}
 function createSendButton(img, name, id){
   var button = document.createElement('button');
   button.setAttribute('type', 'button');
@@ -171,6 +159,12 @@ function createSendButton(img, name, id){
   button.appendChild(item);
   return button;
 }
+
+
+
+
+//##################################################
+
 
 
 function displayDrinks(){
@@ -285,12 +279,12 @@ function displayFoods(){
   el.appendChild(tr);
   var td = document.createElement('TD');
   tr.appendChild(td);
-  var button = createButton('https://i0.wp.com/freepngimages.com/wp-content/uploads/2016/11/bacon-burger.png?fit=624%2C624', 'Värmland\'s', 'buttons13', 62, 'food');
+  var button = createButton('https://i0.wp.com/freepngimages.com/wp-content/uploads/2016/11/bacon-burger.png?fit=624%2C624', 'Hamburger', 'buttons13', 62, 'food');
   td.appendChild(button);
 
   var td = document.createElement('TD');
   tr.appendChild(td);
-  var button = createButton('http://www.stefaniaklinika.hu/wp-content/uploads/2014/03/s%C3%BCltkrumpli.jpg', 'Fries', 'buttons14', 24, 'food');
+  var button = createButton('http://www.stefaniaklinika.hu/wp-content/uploads/2014/03/s%C3%BCltkrumpli.jpg', 'Strips', 'buttons14', 24, 'food');
   td.appendChild(button);
 
   var tr = document.createElement('TR');
@@ -309,12 +303,12 @@ function displayFoods(){
   el.appendChild(tr);
   var td = document.createElement('TD');
   tr.appendChild(td);
-  var button = createButton('http://www.zeppelin-restaurant.de/images/Gerichte_freigestellt/pulled_pork_700.png', 'Pulled pork', 'buttons17', 67, 'food');
+  var button = createButton('http://www.zeppelin-restaurant.de/images/Gerichte_freigestellt/pulled_pork_700.png', 'Pulled Pork', 'buttons17', 67, 'food');
   td.appendChild(button);
 
   var td = document.createElement('TD');
   tr.appendChild(td);
-  var button = createButton('http://www.oporto.co.nz/wp-content/uploads/2015/09/sauce_garlic.102266.png', 'Garlic sauce', 'buttons18', 10, 'food');
+  var button = createButton('http://www.oporto.co.nz/wp-content/uploads/2015/09/sauce_garlic.102266.png', 'Garlic Sauce', 'buttons18', 10, 'food');
   td.appendChild(button);
 
 }
